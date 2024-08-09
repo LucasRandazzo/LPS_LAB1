@@ -1,6 +1,6 @@
 # LABORATÓRIO 01 - Sistema de Matrículas
 
-[Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
+O projeto tem como objetivo desenvolver um Sistema de Matrículas para uma universidade, informatizando todo o processo de inscrição dos alunos nas disciplinas. Esse sistema permitirá que os alunos se matriculem em disciplinas obrigatórias e optativas, respeitando limites mínimos e máximos de inscritos por disciplina. Além disso, o sistema notificará o setor de cobranças sobre as inscrições realizadas e permitirá que os professores acessem a lista de alunos matriculados. O desenvolvimento do projeto segue um cronograma estruturado, com entregas intermediárias de diagramas e um protótipo funcional, culminando na entrega final do sistema, alinhado com os modelos UML e as funcionalidades exigidas.
 
 ## Alunos integrantes da equipe
 
