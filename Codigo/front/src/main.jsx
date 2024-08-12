@@ -9,6 +9,9 @@ import OtherPage from './common/components/OtherPage.jsx'
 import ErrorPage from './common/components/Error/ErrorPage.jsx'
 import OtherDetails from './common/components/OtherDetails.jsx'
 
+import { Provider } from 'react-redux'
+import store from './common/redux/store.js'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -29,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'oldcontent',
-        element: <Navigate to={'/other'}/>
+        element: <Navigate to={'/other'} />
       }
     ]
   },
@@ -38,6 +41,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )
