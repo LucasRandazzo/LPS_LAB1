@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 
 import { selectApresentacao } from '../../redux/user/user.selectors';
 import { login, logout } from '../../redux/user/slice';
+import { Container, Title } from './style';
 
 const HomePage = () => {
   const { currentUser } = useSelector(state => state.userReducer)
@@ -24,12 +25,12 @@ const HomePage = () => {
   }
 
   return (
-    <div>
-      Home
-      <Button onClick={handleClick}>
+    <Container>
+      <Title>Home</Title>
+      <Button variant="contained" onClick={handleClick}>
         botao
       </Button>
-    </div>
+    </Container>
 
   )
 }
