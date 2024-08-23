@@ -1,7 +1,5 @@
 package com.lps.back.services;
 
-import org.apache.commons.lang3.ObjectUtils.Null;
-import org.apache.poi.hpsf.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,9 +47,7 @@ public class RegistrationService implements RegistrationServiceInterface {
         Course course = courseService.get(courseId);
         subjectService.checkSubjectsSituation(subjects, course, studentId);
 
-        Registration registration = new Registration(null, student, course, null);
-        registrationRepository.save(registration);
-        registration.setSubjects(subjects);
+        Registration registration = new Registration(null, student, course, subjects);
         registrationRepository.save(registration);
 
     }

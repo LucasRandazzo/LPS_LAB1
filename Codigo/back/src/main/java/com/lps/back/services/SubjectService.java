@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lps.back.models.Course;
+import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.SubjectRepository;
 import com.lps.back.services.interfaces.SubjectServiceInterface;
@@ -76,6 +77,21 @@ public class SubjectService implements SubjectServiceInterface {
             this.checkSubjectCurseIsValid(s, course);
 
         });
+    }
+
+    @Override
+    public List<Student> getStudents(Long subjectID) {
+        Subject subject = this.get(subjectID);
+        List<Student> students = subject.getRegistrations().stream().map(r -> r.getStudent()).toList();
+        if (students == null || students.isEmpty()) {
+            throw new IllegalArgumentException("Students not found");
+        }
+        return students;
+    }
+
+    @Override
+    public void save(Subject subject) {
+        subjectRepository.save(subject);
     }
 
 }

@@ -13,5 +13,4 @@ public interface TeacherServiceInterface {
 
     public List<Subject> getSubjects(Long teacherId);
 
-    public List<Student> getStudents(Long subjectID);
 }

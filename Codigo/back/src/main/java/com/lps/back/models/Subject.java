@@ -1,5 +1,6 @@
 package com.lps.back.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lps.back.utils.SubjectSituationEnum;
 import java.util.List;
 import jakarta.persistence.Column;
@@ -40,8 +41,7 @@ public class Subject {
     @JoinColumn(name = "discipline_id", nullable = false, unique = false)
     protected Discipline discipline;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "subject_registrations", joinColumns = @JoinColumn(name = "registration_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
     protected List<Registration> registrations;
 
     public String getName() {

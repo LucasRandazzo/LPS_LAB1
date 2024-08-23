@@ -22,6 +22,7 @@ import com.lps.back.repositories.StudentRepository;
 import com.lps.back.repositories.SubjectRepository;
 import com.lps.back.repositories.TeacherRepository;
 import com.lps.back.services.RegistrationService;
+import com.lps.back.services.SubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
 
 import java.util.ArrayList;
@@ -40,13 +41,13 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
         private TeacherRepository teacherRepository;
 
         @Autowired
-        private StudentRepository studentRepository;
-
-        @Autowired
-        private SubjectRepository subjectRepository;
+        private StudentRepository studentRepository;;
 
         @Autowired
         private RegistrationService registrationService;
+
+        @Autowired
+        SubjectService subjectService;
 
         @Override
         public void addCorsMappings(CorsRegistry registry) {
@@ -83,10 +84,10 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                                 discipline, new ArrayList<Registration>());
                 Subject subject3 = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
                                 discipline, new ArrayList<Registration>());
-                subjectRepository.save(subject);
-                subjectRepository.save(subject1);
-                subjectRepository.save(subject2);
-                subjectRepository.save(subject3);
+                subjectService.save(subject);
+                subjectService.save(subject1);
+                subjectService.save(subject2);
+                subjectService.save(subject3);
 
                 Student student = new Student(null, "student", "gmail",
                                 SecurityConfig.passwordEncoder().encode("senha"),
@@ -105,7 +106,8 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 subjects.add(subject2);
                 subjects.add(subject3);
 
-                // registrationService.save(student.getId(), subjectsIds, course.getId());
+                registrationService.save(student.getId(), subjectsIds, course.getId());
 
+                System.out.println("Student enrolled in the subjects: " + subjectService.getStudents(1L).size());
         }
 }
