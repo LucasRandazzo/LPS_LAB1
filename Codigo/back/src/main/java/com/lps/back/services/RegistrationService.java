@@ -8,10 +8,7 @@ import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.RegistrationRepository;
-import com.lps.back.services.interfaces.CourseServiceInterface;
-import com.lps.back.services.interfaces.RegistrationServiceInterface;
-import com.lps.back.services.interfaces.StudentServiceInterface;
-import com.lps.back.services.interfaces.SubjectServiceInterface;
+import com.lps.back.services.interfaces.IRegistrationService;
 import com.lps.back.utils.SubjectSituationEnum;
 
 import jakarta.transaction.Transactional;
@@ -20,19 +17,19 @@ import java.util.*;
 
 @Service
 @Transactional
-public class RegistrationService implements RegistrationServiceInterface {
+public class RegistrationService implements IRegistrationService {
 
     @Autowired
     private RegistrationRepository registrationRepository;
 
     @Autowired
-    private SubjectServiceInterface subjectService;
+    private SubjectService subjectService;
 
     @Autowired
-    private CourseServiceInterface courseService;
+    private CourseService courseService;
 
     @Autowired
-    private StudentServiceInterface studentService;
+    private StudentService studentService;
 
     // US - 09
     @Override

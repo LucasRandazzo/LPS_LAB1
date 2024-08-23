@@ -6,7 +6,7 @@ import com.lps.back.models.Course;
 /**
  * ICourseServiceInterface
  */
-public interface CourseServiceInterface {
+public interface ICourseService {
 
     public Course get(Long id);
 

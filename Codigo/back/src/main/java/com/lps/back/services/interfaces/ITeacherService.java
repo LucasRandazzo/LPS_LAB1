@@ -1,11 +1,10 @@
 package com.lps.back.services.interfaces;
 
 import com.lps.back.models.Teacher;
-import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import java.util.List;
 
-public interface TeacherServiceInterface {
+public interface ITeacherService {
 
     public void save(Teacher teacher);
 

@@ -9,13 +9,13 @@ import com.lps.back.models.Course;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.SubjectRepository;
-import com.lps.back.services.interfaces.SubjectServiceInterface;
+import com.lps.back.services.interfaces.ISubjectService;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class SubjectService implements SubjectServiceInterface {
+public class SubjectService implements ISubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;

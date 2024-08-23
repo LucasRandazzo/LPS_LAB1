@@ -5,7 +5,7 @@ import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import java.util.List;
 
-public interface SubjectServiceInterface {
+public interface ISubjectService {
     public Subject get(Long id); // method to get one Subject by id
 
     public List<Subject> getList(List<Long> ids); // method to get all Subjects

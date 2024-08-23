@@ -34,9 +34,7 @@ public class SecurityConfig {
                                                                 "/swagger-ui/**")
                                                 .permitAll()
                                                 .requestMatchers("/h2-console/**").permitAll()
-                                                .requestMatchers("/auth/hospital/**", "/hospital/**")
-                                                .permitAll()
-                                                .requestMatchers("/patient/**", "/auth/pac/**")
+                                                .requestMatchers("/subject/**", "/auth/pac/**")
                                                 .permitAll());
                 http.headers(headers -> headers
                                 .frameOptions(frameOptions -> frameOptions
@@ -46,7 +44,6 @@ public class SecurityConfig {
         }
 
         @Bean
-        public
         static PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }

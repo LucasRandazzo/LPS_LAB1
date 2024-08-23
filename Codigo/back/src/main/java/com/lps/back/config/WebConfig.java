@@ -25,6 +25,8 @@ import com.lps.back.services.RegistrationService;
 import com.lps.back.services.SubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
 
+import io.swagger.v3.core.util.Json;
+
 import java.util.ArrayList;
 
 @Configuration
@@ -92,6 +94,13 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 Student student = new Student(null, "student", "gmail",
                                 SecurityConfig.passwordEncoder().encode("senha"),
                                 new ArrayList<Registration>());
+                Student student2 = new Student(null, "student2", "gmail",
+                                SecurityConfig.passwordEncoder().encode("senha"),
+                                new ArrayList<Registration>());
+
+                Student student1 = new Student(null, "student1", "gmail",
+                                SecurityConfig.passwordEncoder().encode("senha"),
+                                new ArrayList<Registration>());
 
                 studentRepository.save(student);
 
@@ -108,6 +117,5 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
                 registrationService.save(student.getId(), subjectsIds, course.getId());
 
-                System.out.println("Student enrolled in the subjects: " + subjectService.getStudents(1L).size());
         }
 }

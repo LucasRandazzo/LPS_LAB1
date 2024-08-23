@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.lps.back.models.Student;
 import com.lps.back.repositories.StudentRepository;
-import com.lps.back.services.interfaces.StudentServiceInterface;
+import com.lps.back.services.interfaces.IStudentService;
 
 import jakarta.transaction.Transactional;
 @Service
 @Transactional
-public class StudentService implements StudentServiceInterface {
+public class StudentService implements IStudentService {
 
     @Autowired
     private StudentRepository studentRepository;
