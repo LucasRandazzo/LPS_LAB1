@@ -20,6 +20,7 @@ import jakarta.persistence.ManyToMany;
 public class Teacher extends Usuario {
 
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Subject> subjects;
 
     public Teacher(Long id, String name, String mail, String password, List<Subject> subjects) {

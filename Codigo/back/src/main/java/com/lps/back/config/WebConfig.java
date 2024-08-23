@@ -1,7 +1,7 @@
 package com.lps.back.config;
 
-import org.apache.poi.hpsf.Array;
-import org.hibernate.mapping.List;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -19,15 +19,10 @@ import com.lps.back.models.Teacher;
 import com.lps.back.repositories.CourseRepository;
 import com.lps.back.repositories.DisciplineRepository;
 import com.lps.back.repositories.StudentRepository;
-import com.lps.back.repositories.SubjectRepository;
 import com.lps.back.repositories.TeacherRepository;
 import com.lps.back.services.RegistrationService;
 import com.lps.back.services.SubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
-
-import io.swagger.v3.core.util.Json;
-
-import java.util.ArrayList;
 
 @Configuration
 @EnableWebMvc
@@ -78,18 +73,13 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
                 ArrayList<Teacher> teachers = new ArrayList<Teacher>();
                 teachers.add(teacher);
-                Subject subject = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
-                                discipline, new ArrayList<Registration>());
-                Subject subject1 = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
-                                discipline, new ArrayList<Registration>());
-                Subject subject2 = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
-                                discipline, new ArrayList<Registration>());
-                Subject subject3 = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
-                                discipline, new ArrayList<Registration>());
-                subjectService.save(subject);
-                subjectService.save(subject1);
-                subjectService.save(subject2);
-                subjectService.save(subject3);
+                
+                
+                for (int i = 0; i < 10; i++) {
+                        Subject subject = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
+                        discipline, new ArrayList<Registration>());
+                        subjectService.save(subject);
+                }
 
                 Student student = new Student(null, "student", "gmail",
                                 SecurityConfig.passwordEncoder().encode("senha"),
@@ -105,17 +95,6 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 studentRepository.save(student);
                 studentRepository.save(student1);
                 studentRepository.save(student2);
-
-                ArrayList<Long> subjectsIds = new ArrayList<Long>();
-                subjectsIds.add(subject.getId());
-                subjectsIds.add(subject1.getId());
-                subjectsIds.add(subject2.getId());
-                subjectsIds.add(subject3.getId());
-                ArrayList<Subject> subjects = new ArrayList<Subject>();
-                subjects.add(subject);
-                subjects.add(subject1);
-                subjects.add(subject2);
-                subjects.add(subject3);
-
+        
         }
 }

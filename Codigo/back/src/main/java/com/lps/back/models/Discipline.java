@@ -2,6 +2,8 @@ package com.lps.back.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,9 +37,11 @@ public class Discipline {
     protected Double price;
 
     @OneToMany(mappedBy = "discipline", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Subject> subjects;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "gradle", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "curse_id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Course> courses;
 }

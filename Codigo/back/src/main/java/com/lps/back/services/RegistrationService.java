@@ -1,6 +1,7 @@
 package com.lps.back.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,11 +55,11 @@ public class RegistrationService implements IRegistrationService {
     @Override
     public Registration get(Long id) {
 
-        Registration registration = registrationRepository.findById(id).get();
+        Optional<Registration> registration = registrationRepository.findById(id);
         if (registration == null) {
             throw new IllegalArgumentException("Registration not found");
         }
-        return registration;
+        return registration.get();
     }
 
     // US - 10
@@ -112,6 +113,23 @@ public class RegistrationService implements IRegistrationService {
             }
         }
         return registrationValue;
+    }
+
+    @Override
+    public List<Registration> getAll() {
+        List<Registration> registrations = registrationRepository.findAll();
+
+        return registrations;
+    }
+
+    @Override
+    public List<Registration> getAllByStudentId(Long studentId) {
+        List<Registration> registrations = registrationRepository.findByStudent_Id(studentId);
+        if (registrations == null || registrations.isEmpty()) {
+            throw new IllegalArgumentException("Registration not found, based in student id");
+
+        }
+        return registrations;
     }
 
 }

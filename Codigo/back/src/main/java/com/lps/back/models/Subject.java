@@ -42,12 +42,14 @@ public class Subject {
     protected Discipline discipline;
 
     @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Registration> registrations;
-
+    
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getName() {
         return discipline.getName();
     }
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public List<Course> getCourses() {
         return discipline.getCourses();
     }
