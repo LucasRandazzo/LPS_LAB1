@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 
     @Column(name = "name", nullable = false, unique = false, columnDefinition = "VARCHAR(50)")
     protected String name;

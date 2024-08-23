@@ -19,8 +19,11 @@ public class Student extends Usuario {
     @OneToMany(mappedBy = "student")
     protected List<Registration> registrations;
 
-    Student(Long id, String name, String mail, String password, List<Registration> registrations) {
+    public Student(Long id, String name, String mail, String password, List<Registration> registrations) {
         super(id, name, mail, password);
     }
 
+    public void addRegistration(Registration registration) {
+        registrations.add(registration);
+    }
 }
