@@ -35,3 +35,7 @@ O projeto tem como objetivo desenvolver um Sistema de Matrículas para uma unive
 ## Diagrama de Caso de Uso
 
 ![Diagrama de Caso de Uso](Artefatos/CasoDeUso/lps_CasoDeUso.svg)
+
+## Diagrama de Classes
+
+![Diagrama de Classes](Artefatos/DiagramaDeClasse/LPS_lab1_class_diagram.svg)
