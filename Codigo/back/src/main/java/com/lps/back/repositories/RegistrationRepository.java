@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
-   
+    List<Registration> findByStudent_Id(Long studentId);
 }

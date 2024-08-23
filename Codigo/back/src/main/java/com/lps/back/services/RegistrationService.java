@@ -104,18 +104,18 @@ public class RegistrationService implements RegistrationServiceInterface {
     @Override
     public double getRegistrationValueByStudentId(Long studentId) {
         double registrationValue = 0;
-        // List<Registration> registrations = registrationRepository.findByStudent_Id(studentId);
-        // if (registrations == null || registrations.isEmpty()) {
-        //     throw new IllegalArgumentException("Registration not found, based in student id");
+        List<Registration> registrations = registrationRepository.findByStudent_Id(studentId);
+        if (registrations == null || registrations.isEmpty()) {
+            throw new IllegalArgumentException("Registration not found, based in student id");
 
-        // }
-        // for (Registration registration : registrations) {
-        //     for (Subject subject : registration.getSubjects()) {
-        //         if (subject.getSituation() == SubjectSituationEnum.InProgress) {
-        //             registrationValue += subject.getPrice();
-        //         }
-        //     }
-        // }
+        }
+        for (Registration registration : registrations) {
+            for (Subject subject : registration.getSubjects()) {
+                if (subject.getSituation() == SubjectSituationEnum.InProgress) {
+                    registrationValue += subject.getPrice();
+                }
+            }
+        }
         return registrationValue;
     }
 
