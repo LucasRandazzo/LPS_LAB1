@@ -8,6 +8,6 @@ import com.lps.back.models.Course;
  */
 public interface ICourseService {
 
-    public Course get(Long id);
+    Course get(Long id);
 
 }
