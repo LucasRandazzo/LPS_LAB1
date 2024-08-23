@@ -10,6 +10,7 @@ import com.lps.back.repositories.StudentRepository;
 import com.lps.back.services.interfaces.IStudentService;
 
 import jakarta.transaction.Transactional;
+
 @Service
 @Transactional
 public class StudentService implements IStudentService {

@@ -11,7 +11,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class CourseService implements ICourseService{
+public class CourseService implements ICourseService {
 
     @Autowired
     private CourseRepository courseRepository;

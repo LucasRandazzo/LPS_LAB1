@@ -4,5 +4,5 @@ import java.util.List;
 /**
  * RegistrationDTO
  */
-public record RegistrationDTO(Long studentId, List<Long> subjectsIds, Long courseId) {
+public record RegistrationSaveDTO(Long studentId, List<Long> subjectsIds, Long courseId) {
 }

@@ -34,6 +34,6 @@ public class Course {
     @OneToMany(fetch = FetchType.EAGER)
     protected List<Registration> registrations;
 
-    @ManyToMany(mappedBy = "courses",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
     protected List<Discipline> disciplines;
 }

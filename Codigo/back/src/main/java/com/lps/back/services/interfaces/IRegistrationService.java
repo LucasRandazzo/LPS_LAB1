@@ -1,14 +1,15 @@
 package com.lps.back.services.interfaces;
 
-import com.lps.back.dtos.registration.RegistrationDTO;
+import com.lps.back.dtos.registration.RegistrationSaveDTO;
+import com.lps.back.dtos.registration.RegistrationsDeleteDTO;
 import com.lps.back.models.Registration;
 import java.util.List;
 
 public interface IRegistrationService {
 
-    public void save(RegistrationDTO registrationDTO);
+    public void save(RegistrationSaveDTO registrationDTO);
 
-    void removeSubjects(Long registrationId, List<Long> subjectsIds);
+    void removeSubjects(RegistrationsDeleteDTO registrationsDeleteDTO);
 
     Registration get(Long id);
 

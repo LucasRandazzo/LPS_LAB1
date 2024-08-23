@@ -18,32 +18,27 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity<?> login(UserLoginDTO userLoginDTO)
-    {
+    public ResponseEntity<?> login(UserLoginDTO userLoginDTO) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
 
-    public ResponseEntity<?> register(UserRegisterDTO userRegisterDTO)
-    {
+    public ResponseEntity<?> register(UserRegisterDTO userRegisterDTO) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
 
-    public ResponseEntity<?> startRecoverPasswordProcess(String email)
-    {
+    public ResponseEntity<?> startRecoverPasswordProcess(String email) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
 
-    public ResponseEntity<?> checkRecoverPasswordToken(UserTokenDto userTokenDto)
-    {
+    public ResponseEntity<?> checkRecoverPasswordToken(UserTokenDto userTokenDto) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
 
-    public ResponseEntity<?> changePassword(UserLoginDTO userLoginDTO)
-    {
+    public ResponseEntity<?> changePassword(UserLoginDTO userLoginDTO) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'login'");
     }

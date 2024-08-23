@@ -1,9 +1,12 @@
 package com.lps.back.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lps.back.dtos.registration.RegistrationDTO;
+import com.lps.back.dtos.registration.RegistrationSaveDTO;
+import com.lps.back.dtos.registration.RegistrationsDeleteDTO;
 import com.lps.back.models.Course;
 import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
@@ -13,8 +16,6 @@ import com.lps.back.services.interfaces.IRegistrationService;
 import com.lps.back.utils.SubjectSituationEnum;
 
 import jakarta.transaction.Transactional;
-
-import java.util.*;
 
 @Service
 @Transactional
@@ -34,7 +35,7 @@ public class RegistrationService implements IRegistrationService {
 
     // US - 09
     @Override
-    public void save(RegistrationDTO registrationDTO) {
+    public void save(RegistrationSaveDTO registrationDTO) {
 
         if (registrationDTO.subjectsIds().size() < 4 || registrationDTO.subjectsIds().size() > 6) {
             throw new IllegalArgumentException("The student must be enrolled in at least 4 and at most 6 subjects");
@@ -62,9 +63,9 @@ public class RegistrationService implements IRegistrationService {
 
     // US - 10
     @Override
-    public void removeSubjects(Long registrationId, List<Long> subjectsIds) {
-        Registration registration = this.get(registrationId);
-        List<Subject> subjects = subjectService.getList(subjectsIds);
+    public void removeSubjects(RegistrationsDeleteDTO registrationsDeleteDTO) {
+        Registration registration = this.get(registrationsDeleteDTO.registrationId());
+        List<Subject> subjects = subjectService.getList(registrationsDeleteDTO.subjectsIds());
         registration.removeSubjects(subjects);
 
         if (registration.getSubjects().isEmpty()) {
