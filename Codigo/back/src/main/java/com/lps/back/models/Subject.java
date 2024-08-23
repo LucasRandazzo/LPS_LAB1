@@ -43,4 +43,12 @@ public class Subject {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "subject_registrations", joinColumns = @JoinColumn(name = "registration_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
     protected List<Registration> registrations;
+
+    public String getName() {
+        return discipline.getName();
+    }
+
+    public List<Course> getCourse() {
+        return discipline.getCourses();
+    }
 }
