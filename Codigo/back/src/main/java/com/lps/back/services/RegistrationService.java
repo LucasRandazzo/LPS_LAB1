@@ -3,7 +3,7 @@ package com.lps.back.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lps.back.dtos.RegistrationDTO;
+import com.lps.back.dtos.registration.RegistrationDTO;
 import com.lps.back.models.Course;
 import com.lps.back.models.Registration;
 import com.lps.back.models.Student;

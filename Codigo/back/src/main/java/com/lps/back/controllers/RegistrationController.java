@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lps.back.dtos.RegistrationDTO;
+import com.lps.back.dtos.registration.RegistrationDTO;
 import com.lps.back.models.Student;
 import com.lps.back.services.RegistrationService;
 

@@ -1,6 +1,6 @@
 package com.lps.back.services.interfaces;
 
-import com.lps.back.dtos.RegistrationDTO;
+import com.lps.back.dtos.registration.RegistrationDTO;
 import com.lps.back.models.Registration;
 import java.util.List;
 

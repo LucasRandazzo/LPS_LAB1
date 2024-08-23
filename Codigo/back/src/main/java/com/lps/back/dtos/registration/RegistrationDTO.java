@@ -1,4 +1,4 @@
-package com.lps.back.dtos;
+package com.lps.back.dtos.registration;
 
 import java.util.List;
 /**
