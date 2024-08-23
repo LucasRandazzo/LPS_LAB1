@@ -94,15 +94,17 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 Student student = new Student(null, "student", "gmail",
                                 SecurityConfig.passwordEncoder().encode("senha"),
                                 new ArrayList<Registration>());
-                Student student2 = new Student(null, "student2", "gmail",
+                Student student2 = new Student(null, "student2", "gmail2",
                                 SecurityConfig.passwordEncoder().encode("senha"),
                                 new ArrayList<Registration>());
 
-                Student student1 = new Student(null, "student1", "gmail",
+                Student student1 = new Student(null, "student1", "gmail3",
                                 SecurityConfig.passwordEncoder().encode("senha"),
                                 new ArrayList<Registration>());
 
                 studentRepository.save(student);
+                studentRepository.save(student1);
+                studentRepository.save(student2);
 
                 ArrayList<Long> subjectsIds = new ArrayList<Long>();
                 subjectsIds.add(subject.getId());
@@ -114,8 +116,6 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 subjects.add(subject1);
                 subjects.add(subject2);
                 subjects.add(subject3);
-
-                registrationService.save(student.getId(), subjectsIds, course.getId());
 
         }
 }

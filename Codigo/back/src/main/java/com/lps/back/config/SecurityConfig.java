@@ -27,14 +27,14 @@ public class SecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(authz -> authz
-                                                .requestMatchers("/").permitAll()
+                                                .requestMatchers("/**").permitAll()
                                                 .requestMatchers("/auth/**", "/public/**", "/v3/api-docs",
                                                                 "/configuration/ui",
                                                                 "/swagger-resources/**", "/configuration/security",
                                                                 "/swagger-ui/**")
                                                 .permitAll()
                                                 .requestMatchers("/h2-console/**").permitAll()
-                                                .requestMatchers("/subject/**", "/auth/pac/**")
+                                                .requestMatchers("/subject/**")
                                                 .permitAll());
                 http.headers(headers -> headers
                                 .frameOptions(frameOptions -> frameOptions

@@ -3,6 +3,7 @@ package com.lps.back.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lps.back.dtos.RegistrationDTO;
 import com.lps.back.models.Course;
 import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
@@ -33,16 +34,16 @@ public class RegistrationService implements IRegistrationService {
 
     // US - 09
     @Override
-    public void save(Long studentId, List<Long> subjectsIds, Long courseId) {
+    public void save(RegistrationDTO registrationDTO) {
 
-        if (subjectsIds.size() < 4 || subjectsIds.size() > 6) {
+        if (registrationDTO.subjectsIds().size() < 4 || registrationDTO.subjectsIds().size() > 6) {
             throw new IllegalArgumentException("The student must be enrolled in at least 4 and at most 6 subjects");
         }
 
-        Student student = studentService.get(studentId);
-        List<Subject> subjects = subjectService.getList(subjectsIds);
-        Course course = courseService.get(courseId);
-        subjectService.checkSubjectsSituation(subjects, course, studentId);
+        Student student = studentService.get(registrationDTO.studentId());
+        List<Subject> subjects = subjectService.getList(registrationDTO.subjectsIds());
+        Course course = courseService.get(registrationDTO.courseId());
+        subjectService.checkSubjectsSituation(subjects, course, registrationDTO.studentId());
 
         Registration registration = new Registration(null, student, course, subjects);
         registrationRepository.save(registration);

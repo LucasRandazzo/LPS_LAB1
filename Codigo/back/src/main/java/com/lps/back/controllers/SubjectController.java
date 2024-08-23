@@ -12,14 +12,14 @@ import com.lps.back.services.SubjectService;
 import com.lps.back.models.Student;
 import java.util.List;
 
-@RestController
+@RestController()
 @RequestMapping("/subject")
 public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/student")
     @ResponseBody
     public ResponseEntity<List<Student>> getAllStudentSubject(@PathVariable Long id) {
 

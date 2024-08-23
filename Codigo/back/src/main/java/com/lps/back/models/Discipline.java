@@ -31,7 +31,7 @@ public class Discipline {
     protected String name;
 
     @Column(name = "credits", nullable = false, unique = true, columnDefinition = "int")
-    protected int credits;
+    protected Integer credits;
 
     @Column(name = "price", nullable = false, columnDefinition = "DOUBLE")
     protected Double price;

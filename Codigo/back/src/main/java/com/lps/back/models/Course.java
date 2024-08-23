@@ -29,7 +29,7 @@ public class Course {
     protected String name;
 
     @Column(name = "credits", nullable = false, unique = true, columnDefinition = "int")
-    protected int credits;
+    protected Integer credits;
 
     @OneToMany(fetch = FetchType.EAGER)
     protected List<Registration> registrations;
