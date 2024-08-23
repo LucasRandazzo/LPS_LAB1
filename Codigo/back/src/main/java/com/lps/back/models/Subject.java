@@ -48,7 +48,7 @@ public class Subject {
         return discipline.getName();
     }
 
-    public List<Course> getCourse() {
+    public List<Course> getCourses() {
         return discipline.getCourses();
     }
 }

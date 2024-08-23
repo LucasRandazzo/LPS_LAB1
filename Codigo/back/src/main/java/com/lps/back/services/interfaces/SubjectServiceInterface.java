@@ -9,7 +9,9 @@ public interface SubjectServiceInterface {
 
     public List<Subject> getList(List<Long> ids); // method to get all Subjects
 
-    public void checkSubjectIsAvailable(Subject subject); // method to check if a Subject is available
+    public void checkSubjectIsAvailable(Subject subject, Long studentId); // method to check if a Subject is available
 
     public void checkSubjectCurseIsValid(Subject subject, Course course); // method to check if a Subject is valid
+
+    public void checkSubjectsSituation(List<Subject> subjects, Course course, Long studentId);
 }

@@ -14,24 +14,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
 public class Registration {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "student_id", nullable = false, unique = false)
     protected Student student;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "course_id", nullable = false, unique = false)
     protected Course course;
 
-    @ManyToMany(mappedBy = "registrations")
+    @ManyToMany(mappedBy = "registrations", fetch = FetchType.EAGER)
     protected List<Subject> subjects;
+
+    public Long getStudentId() {
+        return student.getId();
+    }
+
+    public void removeSubjects(List<Subject> subjects) {
+        this.subjects.removeAll(subjects);
+    }
 }

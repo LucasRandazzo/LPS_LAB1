@@ -5,6 +5,6 @@ public enum SubjectSituationEnum {
     Fail, // Failed
     InProgress, // In progress
     Canceled, // Canceled based on the number of students
-    Waiting, // Waiting for end time of registration
+    Available, // Waiting for end time of registration
     Closed; // Closed based on the number of students
 }

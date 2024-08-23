@@ -27,7 +27,7 @@ public abstract class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
     @Column(name = "name", nullable = false, unique = false, columnDefinition = "VARCHAR(50)")
     protected String name;

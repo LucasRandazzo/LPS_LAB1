@@ -23,7 +23,4 @@ public class Student extends Usuario {
         super(id, name, mail, password);
     }
 
-    public void addRegistration(Registration registration) {
-        registrations.add(registration);
-    }
 }
