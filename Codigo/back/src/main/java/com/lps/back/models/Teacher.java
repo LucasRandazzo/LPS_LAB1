@@ -1,16 +1,16 @@
 package com.lps.back.models;
 
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
@@ -18,4 +18,10 @@ public class Teacher extends Usuario {
 
     @ManyToMany(mappedBy = "teachers")
     protected List<Subject> subjects;
+
+    public Teacher(Long id, String name, String mail, String password, List<Subject> subjects) {
+        super(id, name, mail, password);
+        subjects = this.subjects;
+    }
+
 }

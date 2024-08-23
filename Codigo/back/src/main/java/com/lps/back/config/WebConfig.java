@@ -11,8 +11,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.lps.back.models.Secretary;
+import com.lps.back.models.Subject;
+import com.lps.back.models.Teacher;
 import com.lps.back.models.Usuario;
 import com.lps.back.repositories.SecretaryRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -28,10 +33,7 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
         @Override
         public void run(String... args) throws Exception {
-              Secretary secretary = new Secretary();
-              secretary.setId(null);
-              secretary.setName("Secretaria");
-              secretary.setMail("vivia@gmail.com");
-              secretary.setPassword(SecurityConfig.passwordEncoder().encode("senha"));
-              secretaryRepository.save(secretary);
-        }}
+                Secretary secretary = new Secretary(null, "secretary","gmail,", SecurityConfig.passwordEncoder().encode("senha"));
+        
+        }
+}

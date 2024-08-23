@@ -11,12 +11,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 
-@Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Data
@@ -28,11 +26,11 @@ public class Registration {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", nullable = false, unique = false)
-    Student student;
+    protected Student student;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", nullable = false, unique = false)
-    Course course;
+    protected Course course;
 
     @ManyToMany(mappedBy = "registrations")
     protected List<Subject> subjects;
