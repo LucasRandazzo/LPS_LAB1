@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface ITeacherService {
 
-    public void save(Teacher teacher);
+    void save(Teacher teacher);
 
-    public Teacher get(Long id);
+    Teacher get(Long id);
 
-    public List<Subject> getSubjects(Long teacherId);
+    List<Subject> getSubjects(Long teacherId);
 
 }
