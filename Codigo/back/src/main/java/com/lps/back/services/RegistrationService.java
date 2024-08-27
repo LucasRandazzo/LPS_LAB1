@@ -16,6 +16,7 @@ import com.lps.back.repositories.RegistrationRepository;
 import com.lps.back.services.interfaces.IRegistrationService;
 import com.lps.back.utils.SubjectSituationEnum;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -102,7 +103,7 @@ public class RegistrationService implements IRegistrationService {
         double registrationValue = 0;
         List<Registration> registrations = registrationRepository.findByStudent_Id(studentId);
         if (registrations == null || registrations.isEmpty()) {
-            throw new IllegalArgumentException("Registration not found, based in student id");
+            throw new EntityNotFoundException("Registration not found, based in student id");
 
         }
         for (Registration registration : registrations) {
@@ -126,7 +127,7 @@ public class RegistrationService implements IRegistrationService {
     public List<Registration> getAllByStudentId(Long studentId) {
         List<Registration> registrations = registrationRepository.findByStudent_Id(studentId);
         if (registrations == null || registrations.isEmpty()) {
-            throw new IllegalArgumentException("Registration not found, based in student id");
+            throw new EntityNotFoundException("Registration not found, based in student id");
 
         }
         return registrations;

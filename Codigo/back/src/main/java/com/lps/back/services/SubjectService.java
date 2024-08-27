@@ -11,6 +11,7 @@ import com.lps.back.models.Subject;
 import com.lps.back.repositories.SubjectRepository;
 import com.lps.back.services.interfaces.ISubjectService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,7 +25,7 @@ public class SubjectService implements ISubjectService {
     public Subject get(Long id) {
         Subject subject = subjectRepository.findById(id).get();
         if (subject == null) {
-            throw new IllegalArgumentException("Subject not found");
+            throw new EntityNotFoundException("Subject not found");
         }
         return subject;
     }
@@ -33,7 +34,7 @@ public class SubjectService implements ISubjectService {
     public List<Subject> getList(List<Long> ids) {
         List<Subject> subjects = subjectRepository.findAllById(ids);
         if (subjects == null || subjects.isEmpty() || subjects.size() != ids.size()) {
-            throw new IllegalArgumentException("Subjects not found");
+            throw new EntityNotFoundException("Subjects not found");
         }
         return subjects;
     }
@@ -84,7 +85,7 @@ public class SubjectService implements ISubjectService {
         Subject subject = this.get(subjectID);
         List<Student> students = subject.getRegistrations().stream().map(r -> r.getStudent()).toList();
         if (students == null || students.isEmpty()) {
-            throw new IllegalArgumentException("Students not found");
+            throw new EntityNotFoundException("Students not found");
         }
         return students;
     }

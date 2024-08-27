@@ -9,6 +9,7 @@ import com.lps.back.models.Student;
 import com.lps.back.repositories.StudentRepository;
 import com.lps.back.services.interfaces.IStudentService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -27,7 +28,7 @@ public class StudentService implements IStudentService {
     public Student get(Long id) {
         Student student = studentRepository.findById(id).get();
         if (student == null) {
-            throw new IllegalArgumentException("Student not found");
+            throw new EntityNotFoundException("Student not found");
         }
         return student;
     }
@@ -36,7 +37,7 @@ public class StudentService implements IStudentService {
     public List<Student> getAll() {
         List<Student> students = studentRepository.findAll();
         if (students == null || students.isEmpty()) {
-            throw new IllegalArgumentException("Students not found");
+            throw new EntityNotFoundException("Students not found");
         }
         return students;
     }
