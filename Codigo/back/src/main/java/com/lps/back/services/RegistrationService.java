@@ -1,7 +1,6 @@
 package com.lps.back.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,11 +55,9 @@ public class RegistrationService implements IRegistrationService {
     @Override
     public Registration get(Long id) {
 
-        Optional<Registration> registration = registrationRepository.findById(id);
-        if (registration == null) {
-            throw new IllegalArgumentException("Registration not found");
-        }
-        return registration.get();
+        Registration registration = registrationRepository.findById(id).get();
+
+        return registration;
     }
 
     // US - 10

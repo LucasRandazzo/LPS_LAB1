@@ -19,9 +19,6 @@ public class CourseService implements ICourseService {
     @Override
     public Course get(Long id) {
         Course course = courseRepository.findById(id).get();
-        if (course == null) {
-            throw new RuntimeException("Course not found");
-        }
         return course;
     }
 

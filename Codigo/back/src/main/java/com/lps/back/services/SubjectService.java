@@ -24,9 +24,7 @@ public class SubjectService implements ISubjectService {
     @Override
     public Subject get(Long id) {
         Subject subject = subjectRepository.findById(id).get();
-        if (subject == null) {
-            throw new EntityNotFoundException("Subject not found");
-        }
+
         return subject;
     }
 

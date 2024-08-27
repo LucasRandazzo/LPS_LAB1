@@ -1,5 +1,7 @@
 package com.lps.back.controllers;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,7 +26,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
-    
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<MessageDTO> handleNoSuchElementException(NoSuchElementException e) {
+        MessageDTO message = new MessageDTO("NoSuchElementException", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<MessageDTO> handleNoHandlerFoundException(NoHandlerFoundException e) {
         MessageDTO message = new MessageDTO("NoHandlerFoundException", e.getMessage());
