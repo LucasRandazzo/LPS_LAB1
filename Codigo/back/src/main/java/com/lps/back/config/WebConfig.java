@@ -68,17 +68,28 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 Discipline discipline = new Discipline(null, "Laboratório de Desenvolvimento de Software", 100, 500.0,
                                 new ArrayList<Subject>(),
                                 courses);
+                Discipline discipline1 = new Discipline(null, "Engenharia de Software ", 100, 500.0,
+                                new ArrayList<Subject>(),
+                                courses);
 
                 disciplineRepository.save(discipline);
+                disciplineRepository.save(discipline1);
 
                 ArrayList<Teacher> teachers = new ArrayList<Teacher>();
                 teachers.add(teacher);
-                
-                
+
                 for (int i = 0; i < 10; i++) {
-                        Subject subject = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
-                        discipline, new ArrayList<Registration>());
-                        subjectService.save(subject);
+                        if (i / 2 == 0) {
+                                Subject subject = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
+                                                discipline,
+                                                new ArrayList<Registration>());
+                                subjectService.save(subject);
+                        } else {
+                                Subject subject = new Subject(null, 100.0, SubjectSituationEnum.Available, teachers,
+                                                discipline1,
+                                                new ArrayList<Registration>());
+                                subjectService.save(subject);
+                        }
                 }
 
                 Student student = new Student(null, "student", "gmail",
@@ -95,6 +106,6 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 studentRepository.save(student);
                 studentRepository.save(student1);
                 studentRepository.save(student2);
-        
+
         }
 }

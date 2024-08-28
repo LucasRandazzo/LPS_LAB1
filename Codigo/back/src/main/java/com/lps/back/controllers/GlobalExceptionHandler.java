@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<MessageDTO> handleIllegalArgumentException(IllegalArgumentException e) {
         MessageDTO message = new MessageDTO("IllegalArgumentException", e.getMessage());

@@ -30,7 +30,7 @@ public class Discipline {
     @Column(name = "name", nullable = false, unique = false, columnDefinition = "VARCHAR(50)")
     protected String name;
 
-    @Column(name = "credits", nullable = false, unique = true, columnDefinition = "int")
+    @Column(name = "credits", nullable = false, unique = false, columnDefinition = "int")
     protected Integer credits;
 
     @Column(name = "price", nullable = false, columnDefinition = "DOUBLE")

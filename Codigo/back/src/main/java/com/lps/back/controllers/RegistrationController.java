@@ -37,7 +37,7 @@ public class RegistrationController {
     public ResponseEntity<?> getByStudentId(@PathVariable Long id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(registrationService.getAllByStudentId(id));
-
+ 
     }
 
     @GetMapping()
@@ -47,7 +47,7 @@ public class RegistrationController {
 
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/subjects")
     public ResponseEntity<MessageDTO> deleteSubjects(@RequestBody RegistrationsDeleteDTO registrationDTO) {
 
         registrationService.removeSubjects(registrationDTO);
