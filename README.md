@@ -32,6 +32,12 @@ O projeto tem como objetivo desenvolver um Sistema de Matrículas para uma unive
 | US10 - Cancelar Matrícula             | Eu, como aluno, quero poder cancelar a matrícula para me desinscrever de disciplinas que não desejo cursar.                                |
 | US11 - Visualizar Alunos Matriculados | Eu, como professor, quero poder visualizar os alunos matriculados nas minhas disciplinas para acompanhar quem está inscrito.               |
 
+## Decisões de projeto
+
+![Decisões de projeto](./Artefatos/decisoesdeproj.jpeg)
+Além da adição comum da camada de serviços promovendo a modularizar da lógica de negócio, foi adicionada uma interface para a camada de serviço e para a camada de repositório aderindo ao princípio de inversão de dependências e o "open/closed principle". Garantindo que não haja dependências entre componentes concretos e criando pontos de extensão no código.
+Além disso, o principio de Liskov é aderido considerando que as interfaces vão ser substituídas por suas subclasses durante a execução do código, sem afetar o seu funcionamento. Por último, a estrutura do sistema está de acordo com o princípio de segregação de interfaces e responsabilidade única.
+
 ## Diagrama de Caso de Uso
 
 ![Diagrama de Caso de Uso](Artefatos/CasoDeUso/lps_CasoDeUso.svg)
