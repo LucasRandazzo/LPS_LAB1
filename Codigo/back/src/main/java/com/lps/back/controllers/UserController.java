@@ -10,6 +10,7 @@ import com.lps.back.dtos.message.MessageDTO;
 import com.lps.back.dtos.user.UserLoginDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserTokenDto;
+import com.lps.back.models.Usuario;
 import com.lps.back.services.UserService;
 
 @RestController
@@ -34,8 +35,8 @@ public class UserController {
     public ResponseEntity<?> register(UserRegisterDTO userRegisterDTO)
     {
         try {
-            long result = userService.register(userRegisterDTO);
-            return ResponseEntity.ok(result);
+            Usuario result = userService.register(userRegisterDTO);
+            return ResponseEntity.ok(result.getId());
         }
         catch (Exception e) {
             var message = new MessageDTO("Error", "Ocorreu um erro inesperado");

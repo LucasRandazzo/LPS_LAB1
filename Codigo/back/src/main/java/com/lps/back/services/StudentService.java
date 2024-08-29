@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.models.Student;
+import com.lps.back.models.Usuario;
 import com.lps.back.repositories.StudentRepository;
 import com.lps.back.services.interfaces.IStudentService;
 
@@ -19,9 +21,21 @@ public class StudentService implements IStudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
-    public void save(Student student) {
-        studentRepository.save(student);
+    public Student create(UserRegisterDTO student) {
+        Usuario user = userService.register(student);
+
+        Student newStudent = new Student();
+        newStudent.setId(user.getId());
+        newStudent.setMail(user.getMail());
+        newStudent.setName(user.getName());
+        newStudent.setPassword(user.getPassword());
+
+        Student createdObj = this.studentRepository.save(newStudent);
+        return createdObj;
     }
 
     @Override
