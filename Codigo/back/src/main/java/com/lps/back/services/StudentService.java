@@ -34,8 +34,7 @@ public class StudentService implements IStudentService {
         newStudent.setName(user.getName());
         newStudent.setPassword(user.getPassword());
 
-        Student createdObj = this.studentRepository.save(newStudent);
-        return createdObj;
+        return this.studentRepository.save(newStudent);
     }
 
     @Override
