@@ -1,47 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import { createRoot } from "react-dom/client";
 
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import HomePage from './common/components/Home/HomePage.jsx'
-import OtherPage from './common/components/OtherPage.jsx'
-import ErrorPage from './common/components/Error/ErrorPage.jsx'
-import OtherDetails from './common/components/OtherDetails.jsx'
+import { ThemeProvider } from "@mui/material";
+import React from "react";
+import { RouterRoutes } from "./common/routes/Routes.tsx";
+import "./styles/global.css";
+import { Theme } from "./styles/themes/theme.tsx";
+import { NotificationProvider } from "./common/context/NotificationContext.tsx";
 
-import { Provider } from 'react-redux'
-import store from './common/redux/store.js'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '/',
-        element: <HomePage />
-      },
-      {
-        path: '/other',
-        element: <OtherPage />
-      },
-      {
-        path: 'otherDetails/:id',
-        element: <OtherDetails />
-      },
-      {
-        path: 'oldcontent',
-        element: <Navigate to={'/other'} />
-      }
-    ]
-  },
-
-])
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>,
-)
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <ThemeProvider theme={Theme}>
+      <NotificationProvider>
+        <RouterRoutes />
+      </NotificationProvider>
+    </ThemeProvider>
+  </React.StrictMode>
+);
