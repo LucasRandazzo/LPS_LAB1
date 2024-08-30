@@ -41,7 +41,7 @@ public class Discipline {
     protected List<Subject> subjects;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "gradle", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "curse_id"))
+    @JoinTable(name = "gradle", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Course> courses;
 }

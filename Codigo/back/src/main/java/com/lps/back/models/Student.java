@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -15,6 +16,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @PrimaryKeyJoinColumn(name = "id")
 @Entity
 public class Student extends Usuario {
@@ -25,6 +27,10 @@ public class Student extends Usuario {
 
     public Student(Long id, String name, String mail, String password, List<Registration> registrations) {
         super(id, name, mail, password);
+    }
+
+    public Student(String name, String mail, String password){
+        super(name, mail, password);
     }
 
 }

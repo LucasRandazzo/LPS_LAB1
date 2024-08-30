@@ -4,19 +4,33 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.models.Subject;
 import com.lps.back.models.Teacher;
+import com.lps.back.models.Usuario;
 import com.lps.back.repositories.TeacherRepository;
 import com.lps.back.services.interfaces.ITeacherService;
+import com.lps.back.services.interfaces.IUserService;
 
 public class TeacherService implements ITeacherService {
 
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private IUserService userService;
+
     @Override
-    public void save(Teacher teacher) {
-        teacherRepository.save(teacher);
+    public Teacher create(UserRegisterDTO teacher) {
+        Usuario user = userService.register(teacher);
+
+        Teacher newTeacher = new Teacher();
+        newTeacher.setId(user.getId());
+        newTeacher.setMail(user.getMail());
+        newTeacher.setName(user.getName());
+        newTeacher.setPassword(user.getPassword());
+
+        return this.teacherRepository.save(newTeacher);
     }
 
     @Override
@@ -36,6 +50,11 @@ public class TeacherService implements ITeacherService {
             throw new IllegalArgumentException("Subjects not found");
         }
         return subjects;
+    }
+
+    @Override
+    public List<Teacher> getAll() {
+        return this.teacherRepository.findAll();    
     }
 
 }

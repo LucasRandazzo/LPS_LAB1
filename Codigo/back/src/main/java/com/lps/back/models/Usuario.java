@@ -39,4 +39,10 @@ public abstract class Usuario {
     @JsonProperty(access = Access.WRITE_ONLY)
     protected String password;
 
+
+    public Usuario(String name, String mail, String password){
+        this.name = name;
+        this.mail = mail;
+        this.password = password;
+    }
 }

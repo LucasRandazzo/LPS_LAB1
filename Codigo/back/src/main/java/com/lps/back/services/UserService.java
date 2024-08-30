@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.lps.back.dtos.user.UserLoginDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserTokenDto;
+import com.lps.back.models.Usuario;
 import com.lps.back.services.interfaces.IUserService;
 
 @Service
@@ -17,7 +18,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public long register(UserRegisterDTO userRegisterDTO) {
+    public Usuario register(UserRegisterDTO userRegisterDTO) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'register'");
     }
