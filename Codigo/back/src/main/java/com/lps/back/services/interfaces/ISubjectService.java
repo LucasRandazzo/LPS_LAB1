@@ -1,9 +1,11 @@
 package com.lps.back.services.interfaces;
 
+import java.util.List;
+
 import com.lps.back.models.Course;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
-import java.util.List;
+import com.lps.back.utils.SubjectSituationEnum;
 
 public interface ISubjectService {
     Subject get(Long id); // method to get one Subject by id
@@ -17,6 +19,8 @@ public interface ISubjectService {
     void checkSubjectsSituation(List<Subject> subjects, Course course, Long studentId);
 
     List<Student> getStudents(Long subjectID);
+
+    List<Subject> getByCurseIdAndSituation(Long id, SubjectSituationEnum situationEnum);
 
     void save(Subject subject);
 }

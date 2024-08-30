@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lps.back.dtos.message.MessageDTO;
 import com.lps.back.dtos.registration.RegistrationSaveDTO;
 import com.lps.back.dtos.registration.RegistrationsDeleteDTO;
-import com.lps.back.services.RegistrationService;
+import com.lps.back.services.interfaces.IRegistrationService;
 
 @RestController()
 @RequestMapping("/registration")
 public class RegistrationController {
 
     @Autowired
-    private RegistrationService registrationService;
+    private IRegistrationService registrationService;
 
     @PostMapping()
     public ResponseEntity<MessageDTO> save(@RequestBody RegistrationSaveDTO registrationDTO) {

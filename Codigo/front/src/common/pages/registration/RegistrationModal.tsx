@@ -3,17 +3,17 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import Checkbox from "@mui/material/Checkbox";
 
 import {
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Select,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Select,
 } from "@mui/material";
 import {
-    MaterialReactTable,
-    useMaterialReactTable,
+  MaterialReactTable,
+  useMaterialReactTable,
 } from "material-react-table";
 import React from "react";
 import { useNotification } from "../../hooks/useNotification";
@@ -32,35 +32,58 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
   const [subjectsIds, setSubjectsIds] = React.useState<number[]>([]);
   const [courseId, setCourseId] = React.useState<number>();
   const [courseData, setCourseData] = React.useState<any[]>([]);
+  const [subjectData, setsubjectData] = React.useState<any[]>([]);
 
   useEffect(() => {
     setSubjectsIds([]);
+    getCurse()
   }, [props.openModal]);
+
+
+  useEffect(() => {
+    getSubjects()
+  },[courseId])
   const { showNotification } = useNotification();
 
-  const uncheckAll = () => {
-    const checkboxes = document.querySelectorAll<HTMLInputElement>(".checkBox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-  };
-
+  const getCurse = () =>{
+    axiosInstance
+      .get(`/course`)
+      .then((response) => {
+        console.log(response)
+        setCourseData(response.data)
+      })
+      .catch((e) => {
+        console.error(e)
+      });
+  }
+  const getSubjects = () =>{
+    axiosInstance
+      .get(`/subject/course/${courseId}/Available`)
+      .then((response) => {
+        console.log(response)
+        setsubjectData(response.data)
+      })
+      .catch((e) => {
+        console.error(e)
+      });
+  }
   const makeRegistration = () => {
-    uncheckAll();
 
     const registrationBody: RegistrationBody = {
       studentId: 4, //add user id
-      subjectsIds: [],
+      subjectsIds: subjectsIds,
       courseId: courseId,
     };
-
+    console.log(registrationBody)
+    registrationBody.subjectsIds = subjectsIds;
+    console.log(subjectsIds)
     registrationBody.subjectsIds = subjectsIds;
     axiosInstance
-      .post(`/registration`, { data: registrationBody })
+      .post(`/registration`, registrationBody )
       .then((response) => {
         showNotification({
           message: response.data.message,
-          type: "error",
+          type: "success",
           title: response.data.title,
         });
         props.setReload(true);
@@ -108,7 +131,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
   const table = useMaterialReactTable({
     columns,
     enableDensityToggle: false,
-    data: courseData,
+    data: subjectData,
     //passing the static object variant if no dynamic logic is needed
     muiSelectCheckboxProps: {
       color: "secondary", //makes all checkboxes use the secondary color
@@ -198,23 +221,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
               })()}
             </Select>
           </Box>
-          <Box display={"grid"} className="my-5 gap-5">
-            <label>Selecione uma disciplina</label>
-            <Select
-              value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
-            >
-              {(function () {
-                return courseData.map((course) => {
-                  return (
-                    <option key={course.id} value={course.id}>
-                      {course.name}
-                    </option>
-                  );
-                });
-              })()}
-            </Select>
-          </Box>
+          
           <MaterialReactTable table={table} />
         </Box>
       </DialogContent>

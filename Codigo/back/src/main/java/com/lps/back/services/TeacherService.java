@@ -3,6 +3,7 @@ package com.lps.back.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.models.Subject;
@@ -12,6 +13,10 @@ import com.lps.back.repositories.TeacherRepository;
 import com.lps.back.services.interfaces.ITeacherService;
 import com.lps.back.services.interfaces.IUserService;
 
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
 public class TeacherService implements ITeacherService {
 
     @Autowired

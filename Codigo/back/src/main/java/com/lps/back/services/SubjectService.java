@@ -10,6 +10,7 @@ import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.SubjectRepository;
 import com.lps.back.services.interfaces.ISubjectService;
+import com.lps.back.utils.SubjectSituationEnum;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -91,6 +92,12 @@ public class SubjectService implements ISubjectService {
     @Override
     public void save(Subject subject) {
         subjectRepository.save(subject);
+    }
+
+    @Override
+    public List<Subject> getByCurseIdAndSituation(Long id, SubjectSituationEnum situationEnum) {
+
+        return subjectRepository.findByDisciplineCoursesIdAndSituation(id, situationEnum);
     }
 
 }

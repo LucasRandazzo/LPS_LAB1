@@ -12,13 +12,14 @@ import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserTokenDto;
 import com.lps.back.models.Usuario;
 import com.lps.back.services.UserService;
+import com.lps.back.services.interfaces.IUserService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     public ResponseEntity<?> login(UserLoginDTO userLoginDTO)
     {
