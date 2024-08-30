@@ -12,7 +12,10 @@ import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.RegistrationRepository;
+import com.lps.back.services.interfaces.ICourseService;
 import com.lps.back.services.interfaces.IRegistrationService;
+import com.lps.back.services.interfaces.IStudentService;
+import com.lps.back.services.interfaces.ISubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -26,13 +29,13 @@ public class RegistrationService implements IRegistrationService {
     private RegistrationRepository registrationRepository;
 
     @Autowired
-    private SubjectService subjectService;
+    private ISubjectService subjectService;
 
     @Autowired
-    private CourseService courseService;
+    private ICourseService courseService;
 
     @Autowired
-    private StudentService studentService;
+    private IStudentService studentService;
 
     // US - 09
     @Override
