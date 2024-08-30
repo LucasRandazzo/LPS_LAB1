@@ -20,6 +20,8 @@ public interface ISubjectService {
 
     List<Student> getStudents(Long subjectID);
 
+    List<Subject> getListByTeacherId(Long id); // method to get all Subjects
+
     List<Subject> getByCurseIdAndSituation(Long id, SubjectSituationEnum situationEnum);
 
     void save(Subject subject);

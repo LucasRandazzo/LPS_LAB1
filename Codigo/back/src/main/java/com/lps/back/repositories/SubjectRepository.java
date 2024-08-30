@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
     List<Subject> findByDisciplineCoursesIdAndSituation(Long id, SubjectSituationEnum situationEnum);
+    List<Subject> findByTeachersId(Long id);
 }

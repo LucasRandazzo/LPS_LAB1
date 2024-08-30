@@ -3,16 +3,16 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import Checkbox from "@mui/material/Checkbox";
 
 import {
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import {
-    MaterialReactTable,
-    useMaterialReactTable,
+  MaterialReactTable,
+  useMaterialReactTable,
 } from "material-react-table";
 import React from "react";
 import { useNotification } from "../../hooks/useNotification";
@@ -24,10 +24,7 @@ interface ISubjectRegistrationModelProps {
   setReload: Dispatch<SetStateAction<boolean>>;
   registrationID: number;
 }
-interface SubjectDataToRemove {
-  registrationId: number;
-  subjectsIds: number[];
-}
+
 const SubjectRegistrationModel = (props: ISubjectRegistrationModelProps) => {
   const [subjectsIds, setSubjectsIds] = React.useState<number[]>([]);
   const [subjectData, setData] = React.useState<any[]>([]);
@@ -105,6 +102,9 @@ const SubjectRegistrationModel = (props: ISubjectRegistrationModelProps) => {
       {
         accessorKey: "price",
         header: "Valor",
+        Cell: ({ renderedCellValue }) => {
+          return `R$ ${renderedCellValue}`;
+      }
       },
       {
         accessorKey: "situation",

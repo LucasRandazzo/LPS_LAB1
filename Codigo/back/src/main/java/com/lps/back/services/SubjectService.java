@@ -100,4 +100,8 @@ public class SubjectService implements ISubjectService {
         return subjectRepository.findByDisciplineCoursesIdAndSituation(id, situationEnum);
     }
 
+    @Override
+    public List<Subject> getListByTeacherId(Long id) {
+        return subjectRepository.findByTeachersId(id);
+    }
 }

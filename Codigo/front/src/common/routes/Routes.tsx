@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { DashboardLayout } from '../layouts/DashboardLayout';
 import LoginPage from '../pages/login/LoginPage';
 import { RegistrationPage } from '../pages/registration/Registration';
+import { SubjectPage } from '../pages/subjects/Subject';
 
 export const RouterRoutes = () => {
     return (
@@ -24,6 +25,10 @@ export const RouterRoutes = () => {
                     <Route path="/registration" element={ 
                     <DashboardLayout>
                         <RegistrationPage />
+                    </DashboardLayout>} />
+                    <Route path="/subjects" element={ 
+                    <DashboardLayout>
+                        <SubjectPage />
                     </DashboardLayout>} />
                     <Route path="/login" element={<LoginPage/>} />
                 </Routes>

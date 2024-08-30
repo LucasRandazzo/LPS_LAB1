@@ -32,70 +32,68 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
   const [subjectsIds, setSubjectsIds] = React.useState<number[]>([]);
   const [courseId, setCourseId] = React.useState<number>();
   const [courseData, setCourseData] = React.useState<any[]>([]);
-  const [subjectData, setsubjectData] = React.useState<any[]>([]);
+  const [subjectData, setSubjectData] = React.useState<any[]>([]);
 
   useEffect(() => {
     setSubjectsIds([]);
-    getCurse()
+    setCourseId(undefined);
+    setSubjectData([]);
+    getCurse();
   }, [props.openModal]);
 
-
   useEffect(() => {
-    getSubjects()
-  },[courseId])
+    getSubjects();
+  }, [courseId]);
   const { showNotification } = useNotification();
 
-  const getCurse = () =>{
+  const getCurse = () => {
     axiosInstance
       .get(`/course`)
       .then((response) => {
-        console.log(response)
-        setCourseData(response.data)
+        console.log(response);
+        setCourseData(response.data);
       })
       .catch((e) => {
-        console.error(e)
+        console.error(e);
       });
-  }
-  const getSubjects = () =>{
+  };
+  const getSubjects = () => {
     axiosInstance
       .get(`/subject/course/${courseId}/Available`)
       .then((response) => {
-        console.log(response)
-        setsubjectData(response.data)
+        console.log(response);
+        setSubjectData(response.data);
       })
       .catch((e) => {
-        console.error(e)
+        console.error(e);
       });
-  }
+  };
   const makeRegistration = () => {
-
-    const registrationBody: RegistrationBody = {
-      studentId: 4, //add user id
-      subjectsIds: subjectsIds,
-      courseId: courseId,
-    };
-    console.log(registrationBody)
-    registrationBody.subjectsIds = subjectsIds;
-    console.log(subjectsIds)
-    registrationBody.subjectsIds = subjectsIds;
-    axiosInstance
-      .post(`/registration`, registrationBody )
-      .then((response) => {
-        showNotification({
-          message: response.data.message,
-          type: "success",
-          title: response.data.title,
+    if (courseId) {
+      const registrationBody: RegistrationBody = {
+        studentId: 4, //add user id
+        subjectsIds: subjectsIds,
+        courseId: courseId,
+      };
+      axiosInstance
+        .post(`/registration`, registrationBody)
+        .then((response) => {
+          showNotification({
+            message: response.data.message,
+            type: "success",
+            title: response.data.title,
+          });
+          props.setReload(true);
+          props.setOpenModal(false);
+        })
+        .catch((e) => {
+          showNotification({
+            message: e.response.data.message,
+            type: "error",
+            title: e.response.data.title,
+          });
         });
-        props.setReload(true);
-        props.setOpenModal(false);
-      })
-      .catch((e) => {
-        showNotification({
-          message: e.response.data.message,
-          type: "error",
-          title: e.response.data.title,
-        });
-      });
+    }
   };
 
   const handleClose = () => {
@@ -116,6 +114,9 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
       {
         accessorKey: "price",
         header: "Valor",
+        Cell: ({ renderedCellValue }) => {
+          return `R$ ${renderedCellValue}`;
+      }
       },
       {
         accessorKey: "situation",
@@ -208,7 +209,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
             <label>Selecione um curso</label>
             <Select
               value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
+              onChange={(e) => setCourseId(e.target.value as number)}
             >
               {(function () {
                 return courseData.map((course) => {
@@ -221,13 +222,13 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
               })()}
             </Select>
           </Box>
-          
+
           <MaterialReactTable table={table} />
         </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={makeRegistration} variant="outlined">
-        Cadastrar
+          Cadastrar
         </Button>
       </DialogActions>
     </Dialog>

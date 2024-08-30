@@ -29,6 +29,13 @@ public class SubjectController {
         return ResponseEntity.status(200).body(subjectService.getStudents(id));
     }
 
+    @GetMapping("/{id}/teacher")
+    @ResponseBody
+    public ResponseEntity<List<Subject>> getAllSubjectByTeacherId(@PathVariable Long id) {
+
+        return ResponseEntity.status(200).body(subjectService.getListByTeacherId(id));
+    }
+
     @GetMapping("/course/{id}/{situationEnum}")
     @ResponseBody
     public ResponseEntity<List<Subject>> getAllSubjectByCurseIdAndWaitingSituation(@PathVariable Long id,
