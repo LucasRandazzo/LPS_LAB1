@@ -19,31 +19,35 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @PostMapping
+    @PostMapping("login")
     public ResponseEntity<?> login(UserLoginDTO userLoginDTO)
     {
-        long result = userService.login(userLoginDTO);
+        Usuario result = userService.login(userLoginDTO);
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("register")
     public ResponseEntity<?> register(UserRegisterDTO userRegisterDTO)
     {
         Usuario result = userService.register(userRegisterDTO);
         return ResponseEntity.ok(result.getId());
     }
 
+    @PostMapping("recoverpassword")
     public ResponseEntity<?> startRecoverPasswordProcess(String email)
     {
         userService.startRecoverPasswordProcess(email);
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("checktoken")
     public ResponseEntity<?> checkRecoverPasswordToken(UserTokenDto userTokenDto)
     {
         boolean result = userService.checkRecoverPasswordToken(userTokenDto);
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("changepassword")
     public ResponseEntity<?> changePassword(UserLoginDTO userLoginDTO)
     {
         userService.changePassword(userLoginDTO);

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { VisibilityOff } from '@mui/icons-material';
+import { Login, VisibilityOff } from '@mui/icons-material';
 import Visibility from '@mui/icons-material/Visibility';
 import { Box, Button, IconButton, InputAdornment, Link, TextField } from '@mui/material';
 import React from 'react';
@@ -9,6 +9,10 @@ import * as ButtonStyle from '../../../styles/types/ButtonsStyles';
 import * as Input from '../../../styles/types/InputStyles';
 import Validade from '../../utils/Validate.tsx';
 import * as S from './LoginPage.styles.ts';
+import {useDispatch} from 'react-redux'
+import { login, logout } from '../../redux/user/slice.js';
+import { User, UserLogin } from '../../helpers/types.ts';
+import userService from '../../services/userService.ts';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -20,6 +24,8 @@ const LoginPage = () => {
     const [emailHelperText, setEmailHelperText] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const dispatch = useDispatch()
+
     const validade = new Validade();
     // useEffect(() => {
     //     if (isAuthenticated) {
@@ -27,11 +33,17 @@ const LoginPage = () => {
     //     }
     // }, [isAuthenticated, navigate]);
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         const email = refEmail.current?.value || '';
         const password = refPassword.current?.value || '';
         const isEmailValid = validade.validateEmail(email);
+
+        const userLogin : UserLogin = {
+            email: email,
+            password: password,
+        }
 
         setEmailError(!isEmailValid);
 
@@ -43,9 +55,9 @@ const LoginPage = () => {
 
         if (!isEmailValid) return;
 
-        // login(email, password).catch((err) => {
-        //     return showNotification({ message: err.message, type: 'error' });
-        // });
+        const user : User = await userService.login(userLogin)
+        dispatch(login(user))
+        navigate("home");
     };
 
     return (

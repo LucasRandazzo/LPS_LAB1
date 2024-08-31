@@ -1,7 +1,9 @@
 package com.lps.back.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import org.apache.poi.hpsf.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -102,17 +104,20 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 Student student = new Student(null, "student", "gmail",
                                 SecurityConfig.passwordEncoder().encode("senha"),
                                 new ArrayList<Registration>());
-                Student student2 = new Student(null, "student2", "gmail2",
-                                SecurityConfig.passwordEncoder().encode("senha"),
-                                new ArrayList<Registration>());
 
                 Student student1 = new Student(null, "student1", "gmail3",
                                 SecurityConfig.passwordEncoder().encode("senha"),
                                 new ArrayList<Registration>());
 
-                studentRepository.save(student);
-                studentRepository.save(student1);
-                studentRepository.save(student2);
+                Student student2 = new Student(null, "student2", "gmail2",
+                                SecurityConfig.passwordEncoder().encode("senha"),
+                                new ArrayList<Registration>());
+
+                Student student3 = new Student(null, "Pedro Henrique", "pedrohenriquepr08@gmail.com",
+                                SecurityConfig.passwordEncoder().encode("senha"),
+                                new ArrayList<Registration>());
+
+                studentRepository.saveAll(Arrays.asList(student, student1, student2, student3));
 
                 emailSenderService.sendRecoveryPasswordMail("12321asdas@gmail.com","12321321");
         }
