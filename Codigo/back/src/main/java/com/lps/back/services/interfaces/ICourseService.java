@@ -19,4 +19,7 @@ public interface ICourseService {
     // deletar
     Void deleteCourse(Long id);
 
+    // atualizar
+    Course update(Long id, PostAndEditCourseRequest obj);
+
 }
