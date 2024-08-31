@@ -4,6 +4,7 @@ import { Button, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axiosInstance from '../../services/api';
 import RegistrationRegisterModel from './RegistrationModal';
 import SubjectRegistrationModel from './SubjectRegistrationModel';
@@ -17,34 +18,27 @@ export const RegistrationPage = () => {
     const [openRegisterModel, setOpenRegisterModel] = useState(false);
     const [reload, setReload] = useState(true);
 
+    const user = useSelector(state => state.user);
+
     useEffect(() => {
         getRegistration();
     }, [reload]);
-    const ChangeModalState = () => {
-        setOpen(!open);
-    };
+
 
     const getRegistration = () => {
+       if(user && user.id){
         axiosInstance
-            .get('/registration')
-            .then((data) => {
-                setData(data.data);
-                setReload(false);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+        .get('/registration/student/' + user.id)
+        .then((data) => {
+            setData(data.data);
+            setReload(false);
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+       }
     };
-    const deleteVendedor = (id: number) => {
-        axiosInstance
-            .delete(`/vendedor/${id}`)
-            .then((data) => {
-                setReload(true);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    };
+
     const columns = useMemo(
         () => [
             {

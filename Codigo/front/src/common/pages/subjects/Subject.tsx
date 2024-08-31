@@ -3,6 +3,7 @@ import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axiosInstance from '../../services/api';
 import StudentRegistrationInSubject from './StudentRegistrationInSubject';
 
@@ -13,7 +14,8 @@ export const SubjectPage = () => {
     const [studentData, setStudentData] = useState([]);
     const [open, setOpen] = useState(false);
     const [reload, setReload] = useState(true);
-    const userId = 1;
+    
+    const user = useSelector(state => state.user);
     useEffect(() => {
         getSubjects();
     }, [reload]);
@@ -44,16 +46,18 @@ export const SubjectPage = () => {
     };
 
     const getSubjects = () => {
+      if(user && user.id){
         axiosInstance
-            .get(`/subject/${userId}/teacher`)
-            .then((data) => {
-                setData(data.data);
-                console.log(data.data);
-                setReload(false);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+        .get(`/subject/${user.id}/teacher`)
+        .then((data) => {
+            setData(data.data);
+            console.log(data.data);
+            setReload(false);
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+      }
     };
 
     const columns = useMemo(
