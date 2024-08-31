@@ -22,6 +22,7 @@ import com.lps.back.repositories.CurriculumRepository;
 import com.lps.back.repositories.DisciplineRepository;
 import com.lps.back.repositories.StudentRepository;
 import com.lps.back.repositories.TeacherRepository;
+import com.lps.back.services.EmailSenderService;
 import com.lps.back.services.SubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
 
@@ -46,6 +47,9 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
         @Autowired
         SubjectService subjectService;
+
+        @Autowired
+        EmailSenderService emailSenderService;
 
         @Override
         public void addCorsMappings(CorsRegistry registry) {
@@ -110,5 +114,6 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 studentRepository.save(student1);
                 studentRepository.save(student2);
 
+                emailSenderService.sendRecoveryPasswordMail("12321asdas@gmail.com","12321321");
         }
 }
