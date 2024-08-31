@@ -31,7 +31,7 @@ public class TeacherService implements ITeacherService {
 
         Teacher newTeacher = new Teacher();
         newTeacher.setId(user.getId());
-        newTeacher.setMail(user.getMail());
+        newTeacher.setEmail(user.getEmail());
         newTeacher.setName(user.getName());
         newTeacher.setPassword(user.getPassword());
 

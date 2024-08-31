@@ -30,7 +30,7 @@ public class StudentService implements IStudentService {
 
         Student newStudent = new Student();
         newStudent.setId(user.getId());
-        newStudent.setMail(user.getMail());
+        newStudent.setEmail(user.getEmail());
         newStudent.setName(user.getName());
         newStudent.setPassword(user.getPassword());
 

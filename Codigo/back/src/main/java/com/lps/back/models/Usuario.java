@@ -33,16 +33,15 @@ public abstract class Usuario {
     protected String name;
 
     @Column(name = "mail", nullable = false, unique = true, columnDefinition = "VARCHAR(255)")
-    protected String mail;
+    protected String email;
 
     @Column(name = "password", nullable = false, unique = false, columnDefinition = "VARCHAR(255)")
     @JsonProperty(access = Access.WRITE_ONLY)
     protected String password;
 
-
-    public Usuario(String name, String mail, String password){
+    public Usuario(String name, String email, String password) {
         this.name = name;
-        this.mail = mail;
+        this.email = email;
         this.password = password;
     }
 }

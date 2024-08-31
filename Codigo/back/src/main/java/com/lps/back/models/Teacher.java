@@ -28,4 +28,8 @@ public class Teacher extends Usuario {
         subjects = this.subjects;
     }
 
+    public Teacher(String name, String mail, String password){
+        super(name, mail, password);
+    }
+
 }

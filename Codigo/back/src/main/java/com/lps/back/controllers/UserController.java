@@ -3,6 +3,7 @@ package com.lps.back.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,64 +22,35 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @PostMapping
     public ResponseEntity<?> login(UserLoginDTO userLoginDTO)
     {
-        try {
-            long result = userService.login(userLoginDTO);
-            return ResponseEntity.ok(result);
-        }
-        catch (Exception e) {
-            var message = new MessageDTO("Error", "Ocorreu um erro inesperado");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
+        long result = userService.login(userLoginDTO);
+        return ResponseEntity.ok(result);
     }
 
     public ResponseEntity<?> register(UserRegisterDTO userRegisterDTO)
     {
-        try {
-            Usuario result = userService.register(userRegisterDTO);
-            return ResponseEntity.ok(result.getId());
-        }
-        catch (Exception e) {
-            var message = new MessageDTO("Error", "Ocorreu um erro inesperado");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
+        Usuario result = userService.register(userRegisterDTO);
+        return ResponseEntity.ok(result.getId());
     }
 
     public ResponseEntity<?> startRecoverPasswordProcess(String email)
     {
-        try {
-            userService.startRecoverPasswordProcess(email);
-            return ResponseEntity.noContent().build();
-        }
-        catch (Exception e) {
-            var message = new MessageDTO("Error", "Ocorreu um erro inesperado");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
+        userService.startRecoverPasswordProcess(email);
+        return ResponseEntity.noContent().build();
     }
 
     public ResponseEntity<?> checkRecoverPasswordToken(UserTokenDto userTokenDto)
     {
-        try {
-            boolean result = userService.checkRecoverPasswordToken(userTokenDto);
-            return ResponseEntity.ok(result);
-        }
-        catch (Exception e) {
-            var message = new MessageDTO("Error", "Ocorreu um erro inesperado");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
+        boolean result = userService.checkRecoverPasswordToken(userTokenDto);
+        return ResponseEntity.ok(result);
     }
 
     public ResponseEntity<?> changePassword(UserLoginDTO userLoginDTO)
     {
-        try {
-            userService.changePassword(userLoginDTO);
-            return ResponseEntity.noContent().build();
-        }
-        catch (Exception e) {
-            var message = new MessageDTO("Error", "Ocorreu um erro inesperado");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
+        userService.changePassword(userLoginDTO);
+        return ResponseEntity.noContent().build();
     }
 
 }
