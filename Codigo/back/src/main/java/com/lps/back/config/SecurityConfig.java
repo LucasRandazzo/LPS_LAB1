@@ -35,7 +35,9 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 .requestMatchers("/h2-console/**").permitAll()
                                                 .requestMatchers("/subject/**")
+                                                .permitAll() .requestMatchers("/user/**")
                                                 .permitAll());
+                                                
                 http.headers(headers -> headers
                                 .frameOptions(frameOptions -> frameOptions
                                                 .sameOrigin()));
