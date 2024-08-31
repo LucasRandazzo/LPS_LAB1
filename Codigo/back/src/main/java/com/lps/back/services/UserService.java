@@ -59,14 +59,33 @@ public class UserService implements IUserService {
 
     @Override
     public boolean checkRecoverPasswordToken(UserTokenDto userTokenDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkRecoverPasswordToken'");
+        String token = createToken(userTokenDto.email());
+
+        if (token.equals(userTokenDto.token())) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public void changePassword(UserLoginDTO userLoginDTO) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+    }
+
+    private String createToken(String texto) {
+        var BIG_PRIME_NUMBER = 97;
+        String newToken = "";
+
+        for (int i = 0; i < 4; i++) {
+            var pos = (BIG_PRIME_NUMBER * i) % texto.length();
+            newToken += texto.charAt(pos);
+        }
+
+        newToken = newToken.toUpperCase();
+
+        return newToken;
     }
 
 }
