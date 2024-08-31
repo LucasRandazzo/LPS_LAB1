@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { User, UserLogin } from "../helpers/types";
+import { User, UserLogin, UserToken } from "../helpers/types";
 import BaseRepository from "./BaseRepository";
 
 class UserRepository extends BaseRepository {
@@ -11,6 +11,25 @@ class UserRepository extends BaseRepository {
         console.log(this.url)
         const response: AxiosResponse<User> = await this.post(user, "login")
         return response.data
+    }
+
+    async register(user : User): Promise<User> {
+        console.log(this.url)
+        const response: AxiosResponse<User> = await this.post(user, "register")
+        return response.data
+    }
+
+    async recoverpassword(email : string): Promise<void> {
+        await this.post(email, "register")
+    }
+
+    async checktoken(userToken: UserToken): Promise<boolean> {
+        const response: AxiosResponse<boolean> = await this.post(userToken, "checktoken");
+        return response.data;
+    }
+
+    async changepassword(userLogin: UserLogin) : Promise<void> {
+        await this.post(userLogin, "changepassword")
     }
 
 }

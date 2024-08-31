@@ -18,6 +18,8 @@ import { RegistrationPage } from "./common/pages/registration/Registration.tsx";
 import { StudentPage } from "./common/pages/student/StudentPage.tsx";
 import { SubjectPage } from "./common/pages/subjects/Subject.tsx";
 import { TeacherPage } from "./common/pages/teacher/TeacherPage.tsx";
+import LoginPage from "./common/pages/login/LoginPage.tsx";
+import ForgotPassword from "./common/pages/forgotPassword/ForgotPassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "/home",
         element: <HomePage />,
       },
       {
@@ -53,8 +55,17 @@ const router = createBrowserRouter([
         path: "/teacher",
         element: <TeacherPage />,
       },
+
     ],
   },
+  {
+    path: '/login',
+    element: <LoginPage />
+  },
+  {
+    path: '/forgotpassword',
+    element: <ForgotPassword />
+  }
 ]);
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>

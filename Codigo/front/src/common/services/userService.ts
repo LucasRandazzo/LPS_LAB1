@@ -1,4 +1,4 @@
-import { User, UserLogin } from "../helpers/types";
+import { User, UserLogin, UserToken } from "../helpers/types";
 import UserRepository from "../repositories/userRepository";
 
 class UserService {
@@ -11,6 +11,23 @@ class UserService {
   async login(user : UserLogin): Promise<User> {
     return this.userRepository.login(user)
   }
+
+  async register(user : User): Promise<User> {
+    return this.userRepository.register(user)
+  }
+
+  async recoverpassword(email : string): Promise<void> {
+    return this.userRepository.recoverpassword(email);
+  }
+
+  async checktoken(userToken: UserToken): Promise<boolean> {
+      return this.userRepository.checktoken(userToken);
+  }
+
+  async changepassword(userLogin: UserLogin) : Promise<void> {
+      return this.userRepository.changepassword(userLogin);
+  }
+
 }
 
 const userService = new UserService();

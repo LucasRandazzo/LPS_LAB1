@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Login, VisibilityOff } from '@mui/icons-material';
+import { CallToAction, Login, VisibilityOff } from '@mui/icons-material';
 import Visibility from '@mui/icons-material/Visibility';
 import { Box, Button, IconButton, InputAdornment, Link, TextField } from '@mui/material';
 import React from 'react';
@@ -63,10 +63,16 @@ const LoginPage = () => {
 
         if (!isEmailValid) return;
 
-        const user : User = await userService.login(userLogin)
-        localStorage.setItem("user", JSON.stringify(user));
-        dispatch(login(user))
-        navigate("/home")
+        try {
+            const user : User = await userService.login(userLogin) 
+            localStorage.setItem("user", JSON.stringify(user));
+            dispatch(login(user))
+            navigate("/home")
+        }
+        catch(err) {
+            console.log(err)
+        }
+
     };
 
     return (

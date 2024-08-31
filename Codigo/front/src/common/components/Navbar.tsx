@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface INavBar {
     setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,6 +46,8 @@ export default function PrimarySearchAppBar(props: INavBar) {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const navigate = useNavigate();
 
     const handleProfileMenuOpen = (
         event: React.MouseEvent<HTMLElement>
@@ -77,6 +80,8 @@ export default function PrimarySearchAppBar(props: INavBar) {
     };
 
     const confirmLogout = () => {
+        localStorage.clear();
+        navigate("/login")
         closeLogoutDialog();
     };
 
