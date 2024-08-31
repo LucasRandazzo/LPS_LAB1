@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Login, VisibilityOff } from '@mui/icons-material';
@@ -9,7 +9,7 @@ import * as ButtonStyle from '../../../styles/types/ButtonsStyles';
 import * as Input from '../../../styles/types/InputStyles';
 import Validade from '../../utils/Validate.tsx';
 import * as S from './LoginPage.styles.ts';
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { login, logout } from '../../redux/user/slice.js';
 import { User, UserLogin } from '../../helpers/types.ts';
 import userService from '../../services/userService.ts';
@@ -27,11 +27,19 @@ const LoginPage = () => {
     const dispatch = useDispatch()
 
     const validade = new Validade();
-    // useEffect(() => {
-    //     if (isAuthenticated) {
-    //         navigate('/dashboard');
-    //     }
-    // }, [isAuthenticated, navigate]);
+    
+    useEffect(() => {
+        const localUser = localStorage.getItem("user");
+
+        if (localUser === null) {
+            return
+        }
+        
+        const user = JSON.parse(localUser);
+        dispatch(login(user))
+
+        navigate('/home')
+    }, []);
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -56,8 +64,9 @@ const LoginPage = () => {
         if (!isEmailValid) return;
 
         const user : User = await userService.login(userLogin)
+        localStorage.setItem("user", JSON.stringify(user));
         dispatch(login(user))
-        navigate("home");
+        navigate("/home")
     };
 
     return (
