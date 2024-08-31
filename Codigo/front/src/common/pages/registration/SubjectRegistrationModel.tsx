@@ -34,16 +34,8 @@ const SubjectRegistrationModel = (props: ISubjectRegistrationModelProps) => {
     setData(props.data);
   }, [props.openModal]);
   const { showNotification } = useNotification();
-  
-  const uncheckAll = () => {
-    const checkboxes = document.querySelectorAll<HTMLInputElement>(".checkBox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-  };
 
   const removeSubject = () => {
-    uncheckAll();
     const subjectTORemove = {
       registrationId: props.registrationID,
       subjectsIds: [],

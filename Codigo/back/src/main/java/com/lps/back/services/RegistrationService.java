@@ -32,7 +32,7 @@ public class RegistrationService implements IRegistrationService {
     private ISubjectService subjectService;
 
     @Autowired
-    private ICurriculumService courseService;
+    private ICurriculumService curriculumService;
 
     @Autowired
     private IStudentService studentService;
@@ -47,7 +47,7 @@ public class RegistrationService implements IRegistrationService {
 
         Student student = studentService.get(registrationDTO.studentId());
         List<Subject> subjects = subjectService.getList(registrationDTO.subjectsIds());
-        Curriculum course = courseService.get(registrationDTO.courseId());
+        Curriculum course = curriculumService.get(registrationDTO.courseId());
         subjectService.checkSubjectsSituation(subjects, course, registrationDTO.studentId());
         Registration registration = new Registration(null, student, course, subjects);
         registrationRepository.save(registration);
