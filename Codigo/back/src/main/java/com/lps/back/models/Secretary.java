@@ -1,9 +1,9 @@
 package com.lps.back.models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Entity;
 
 @PrimaryKeyJoinColumn(name = "id")
 @Entity

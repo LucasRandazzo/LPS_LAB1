@@ -1,8 +1,6 @@
 package com.lps.back.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Security;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
 
 import com.lps.back.config.SecurityConfig;
@@ -20,6 +18,9 @@ import jakarta.persistence.EntityNotFoundException;
 public class UserService implements IUserService {
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    EmailSenderService emailSenderService;
 
     @Override
     public long login(UserLoginDTO userLoginDTO) {
@@ -47,14 +48,22 @@ public class UserService implements IUserService {
         }
 
         user = UsuarioMapper.dtoToModel(userRegisterDTO);
+        user.setId(null);
+        usuarioRepository.save(user);
 
         return user;
     }
 
     @Override
     public void startRecoverPasswordProcess(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startRecoverPasswordProcess'");
+        String token = createToken(email);
+
+        try {
+            emailSenderService.sendRecoveryPasswordMail(email, token);
+        }
+        catch (Exception e) {
+            throw new EntityNotFoundException("Email inixistente");
+        }
     }
 
     @Override
@@ -70,8 +79,14 @@ public class UserService implements IUserService {
 
     @Override
     public void changePassword(UserLoginDTO userLoginDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+        Usuario user = usuarioRepository.findByEmail(userLoginDTO.email());
+
+        if (user == null) {
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+
+        user.setPassword(userLoginDTO.password());
+        usuarioRepository.save(user);
     }
 
     private String createToken(String texto) {
