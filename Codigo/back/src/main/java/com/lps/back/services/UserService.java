@@ -30,9 +30,10 @@ public class UserService implements IUserService {
             throw new EntityNotFoundException("Usuário não cadastrado");
         }
 
-        String encodePassword = SecurityConfig.passwordEncoder().encode(userLoginDTO.password());
+        boolean matchesPassword = SecurityConfig.passwordEncoder().matches(userLoginDTO.password(),
+                usuario.getPassword());
 
-        if (!encodePassword.equals(usuario.getPassword())) {
+        if (!matchesPassword) {
             throw new IllegalArgumentException("Senha incorreta");
         }
 
@@ -60,8 +61,7 @@ public class UserService implements IUserService {
 
         try {
             emailSenderService.sendRecoveryPasswordMail(email, token);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new EntityNotFoundException("Email inixistente");
         }
     }
