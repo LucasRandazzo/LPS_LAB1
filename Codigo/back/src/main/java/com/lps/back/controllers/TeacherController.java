@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ import com.lps.back.services.interfaces.ITeacherService;
 @RestController
 @RequestMapping("/teacher")
 public class TeacherController {
-    
+
     @Autowired
     private ITeacherService teacherService;
 
@@ -35,5 +36,11 @@ public class TeacherController {
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> getTeacherById(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.teacherService.get(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {
+        this.teacherService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

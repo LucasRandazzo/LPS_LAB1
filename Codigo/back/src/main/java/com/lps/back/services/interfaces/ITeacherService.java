@@ -14,4 +14,6 @@ public interface ITeacherService {
     List<Teacher> getAll();
 
     List<Subject> getSubjects(Long teacherId);
+
+    void delete(Long id);
 }

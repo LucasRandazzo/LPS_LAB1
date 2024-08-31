@@ -9,6 +9,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
   Select,
 } from "@mui/material";
 import {
@@ -116,7 +119,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
         header: "Valor",
         Cell: ({ renderedCellValue }) => {
           return `R$ ${renderedCellValue}`;
-      }
+        },
       },
       {
         accessorKey: "situation",
@@ -206,21 +209,26 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
       <DialogContent>
         <Box display={"grid"} className="my-5">
           <Box display={"grid"} className="my-5 gap-5">
-            <label>Selecione um curso</label>
-            <select
-              value={courseId}
-              onChange={(e) => setCourseId(e.target.value as number)}
-            >
-              {(function () {
-                return courseData.map((course) => {
-                  return (
-                    <option key={course.id} value={course.id}>
-                      {course.course.name + " " +course.id}
-                    </option>
-                  );
-                });
-              })()}
-            </select>
+            <FormControl fullWidth>
+              <InputLabel id="course-select-label">
+                Selecione um curso
+              </InputLabel>
+              <Select
+                labelId="course-select-label"
+                value={courseId}
+                onChange={(e) => setCourseId(e.target.value as number)}
+                fullWidth
+              >
+                <MenuItem value="">
+                  <em>Selecione um curso</em>
+                </MenuItem>
+                {courseData.map((course) => (
+                  <MenuItem key={course.id} value={course.id}>
+                    {course.course.name + " - " + course.id}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
 
           <MaterialReactTable table={table} />

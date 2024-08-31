@@ -1,9 +1,9 @@
 package com.lps.back.services.interfaces;
 
+import java.util.List;
+
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.models.Student;
-
-import java.util.List;
 
 public interface IStudentService {
     Student create(UserRegisterDTO student);
@@ -11,4 +11,6 @@ public interface IStudentService {
     Student get(Long id);
 
     List<Student> getAll();
+
+    void delete(Long id);
 }

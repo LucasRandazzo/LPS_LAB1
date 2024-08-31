@@ -1,14 +1,18 @@
 package com.lps.back.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lps.back.dtos.registration.RegistrationsDeleteDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.models.Student;
+import com.lps.back.models.Subject;
 import com.lps.back.models.Usuario;
 import com.lps.back.repositories.StudentRepository;
+import com.lps.back.services.interfaces.IRegistrationService;
 import com.lps.back.services.interfaces.IStudentService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +27,9 @@ public class StudentService implements IStudentService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    IRegistrationService registrationService;
 
     @Override
     public Student create(UserRegisterDTO student) {
@@ -50,6 +57,20 @@ public class StudentService implements IStudentService {
             throw new EntityNotFoundException("Students not found");
         }
         return students;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Student student = studentRepository.findById(id).get();
+        student.getRegistrations().forEach(registration -> {
+            List<Long> subjects = registration.getSubjects().stream().map(Subject::getId).collect(Collectors.toList());
+            RegistrationsDeleteDTO registrationsDeleteDTO = new RegistrationsDeleteDTO(registration.getId(),
+                    subjects);
+
+            registrationService.removeSubjects(registrationsDeleteDTO);
+        });
+
+        studentRepository.delete(student);
     }
 
 }

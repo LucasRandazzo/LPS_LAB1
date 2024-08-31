@@ -10,6 +10,7 @@ import com.lps.back.models.Subject;
 import com.lps.back.models.Teacher;
 import com.lps.back.models.Usuario;
 import com.lps.back.repositories.TeacherRepository;
+import com.lps.back.services.interfaces.ISubjectService;
 import com.lps.back.services.interfaces.ITeacherService;
 import com.lps.back.services.interfaces.IUserService;
 
@@ -21,6 +22,9 @@ public class TeacherService implements ITeacherService {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private ISubjectService subjectService;
 
     @Autowired
     private IUserService userService;
@@ -59,7 +63,16 @@ public class TeacherService implements ITeacherService {
 
     @Override
     public List<Teacher> getAll() {
-        return this.teacherRepository.findAll();    
+        return this.teacherRepository.findAll();
+    }
+
+    @Override
+    public void delete(Long id) {
+        Teacher teacher = this.get(id);
+        teacher.getSubjects().forEach(subject -> {
+            subjectService.removeTeacher(subject, teacher);
+        });
+        this.teacherRepository.delete(teacher);
     }
 
 }
