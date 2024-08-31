@@ -23,7 +23,7 @@ public class UserService implements IUserService {
     EmailSenderService emailSenderService;
 
     @Override
-    public long login(UserLoginDTO userLoginDTO) {
+    public Usuario login(UserLoginDTO userLoginDTO) {
         Usuario usuario = usuarioRepository.findByEmail(userLoginDTO.email());
 
         if (usuario == null) {
@@ -36,7 +36,7 @@ public class UserService implements IUserService {
             throw new IllegalArgumentException("Senha incorreta");
         }
 
-        return usuario.getId();
+        return usuario;
     }
 
     @Override

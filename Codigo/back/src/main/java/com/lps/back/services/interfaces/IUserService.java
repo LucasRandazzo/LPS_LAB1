@@ -7,7 +7,7 @@ import com.lps.back.models.Usuario;
 
 public interface IUserService {
 
-    long login(UserLoginDTO userLoginDTO);
+    Usuario login(UserLoginDTO userLoginDTO);
 
     Usuario register(UserRegisterDTO userRegisterDTO);
 
