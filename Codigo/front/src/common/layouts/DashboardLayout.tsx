@@ -15,6 +15,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         { id: 1, icon: <FactCheckIcon />, label: 'Matricula', location: '/registration' },
         { id: 1, icon: <FactCheckIcon />, label: 'Materias', location: '/subjects' },
         { id: 1, icon: <FactCheckIcon />, label: 'Cursos', location: '/course' },
+        { id: 1, icon: <FactCheckIcon />, label: 'Curriculos', location: '/curriculum' },
     ];
 
     return (
