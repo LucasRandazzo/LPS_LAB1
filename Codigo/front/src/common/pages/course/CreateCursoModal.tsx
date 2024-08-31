@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 
-
 import {
   Box,
   Button,
@@ -12,15 +11,14 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNotification } from "../../hooks/useNotification";
-import axiosInstance from "../../services/api";
+import axiosInstance from '../../services/api';
 interface ICreateCourseModalProps {
   openModal: boolean;
+  editId?: number;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
-interface RegistrationBody {
-  name: string;
-}
+
 const CreateCourseModal = (props: ICreateCourseModalProps) => {
   const [name, setName] = React.useState<string>();
 
@@ -28,13 +26,31 @@ const CreateCourseModal = (props: ICreateCourseModalProps) => {
     setName("");
   }, [props.openModal]);
 
-
   const { showNotification } = useNotification();
 
   const makeRegistration = () => {
     if (name) {
-  
-      axiosInstance
+      if(props.editId){
+        axiosInstance
+        .put(`/course/${props.editId}`, {"name": name})
+        .then((response) => {
+          showNotification({
+            message: response.data.message,
+            type: "success",
+            title: response.data.title,
+          });
+          props.setReload(true);
+          props.setOpenModal(false);
+        })
+        .catch((e) => {
+          showNotification({
+            message: e.response.data.message,
+            type: "error",
+            title: e.response.data.title,
+          });
+        });
+      } else {
+        axiosInstance
         .post(`/course`, {"name": name})
         .then((response) => {
           showNotification({
@@ -52,8 +68,11 @@ const CreateCourseModal = (props: ICreateCourseModalProps) => {
             title: e.response.data.title,
           });
         });
+        
     }
-  };
+      }
+    }
+ 
 
   const handleClose = () => {
     props.setOpenModal(false);

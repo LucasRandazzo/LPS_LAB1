@@ -18,8 +18,23 @@ export const CoursePage = () => {
         getRegistration();
     }, [reload]);
 
- 
+    useEffect(() => {
+        if (deleteId) {
+            deleteCourse();
+        }
+    }, [deleteId]);
 
+
+    const createCurriculum = (courseId) => {
+        axiosInstance
+        .post('/curriculum',{"courseId": courseId})
+        .then((data) => {
+            setReload(false);
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+    }
     const getRegistration = () => {
         axiosInstance
             .get('/course')
@@ -31,7 +46,16 @@ export const CoursePage = () => {
                 console.log(e);
             });
     };
-
+    const deleteCourse = () => {
+        axiosInstance
+            .delete(`/course/${deleteId}`)
+            .then((data) => {
+                setReload(true);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
     const columns = useMemo(
         () => [
             {
@@ -87,6 +111,13 @@ export const CoursePage = () => {
                  <Delete color="error" />
                 </IconButton>
                 
+                <IconButton
+                    onClick={() => {
+                        createCurriculum(row.original.id)
+                    }}
+                >
+                 <AddIcon color="success" />
+                </IconButton>
             </Box>
         ),
 
@@ -121,7 +152,7 @@ export const CoursePage = () => {
     return (
         <>
             <header className="flex justify-between">
-                <Typography variant="h4">Matriculas</Typography>
+                <Typography variant="h4">Curso</Typography>
                 <Button variant="contained" onClick={() => {
                     setOpen(!open)
                 }} endIcon={<AddIcon />}>
@@ -133,7 +164,7 @@ export const CoursePage = () => {
                 <MaterialReactTable table={table} />
               
             </Box>
-            <CreateCourseModal openModal={open} editId={} setOpenModal={setOpen} setReload={setReload} />
+            <CreateCourseModal openModal={open} editId={editId}  setOpenModal={setOpen} setReload={setReload} />
         </>
     );
 };

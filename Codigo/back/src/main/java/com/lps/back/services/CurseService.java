@@ -45,4 +45,12 @@ public class CurseService implements ICourseService {
         return null;
     }
 
+    @Override
+    public Course update(Long id, PostAndEditCourseRequest obj) {
+        Course course = CourseRepository.findById(id).get();
+        course.setName(obj.name());
+        Course updatedCourse = CourseRepository.save(course);
+        return updatedCourse;
+    }
+
 }
