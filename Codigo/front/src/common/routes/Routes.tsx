@@ -5,6 +5,7 @@ import { DashboardLayout } from '../layouts/DashboardLayout';
 import LoginPage from '../pages/login/LoginPage';
 import { RegistrationPage } from '../pages/registration/Registration';
 import { SubjectPage } from '../pages/subjects/Subject';
+import { CoursePage } from '../pages/course/CoursePage';
 
 export const RouterRoutes = () => {
     return (
@@ -21,6 +22,10 @@ export const RouterRoutes = () => {
                     <Route path="/" element={
                     <DashboardLayout>
                     <RegistrationPage />
+                </DashboardLayout>} />
+                <Route path="/course" element={
+                    <DashboardLayout>
+                    <CoursePage />
                 </DashboardLayout>} />
                     <Route path="/registration" element={ 
                     <DashboardLayout>
