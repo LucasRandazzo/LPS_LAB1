@@ -5,6 +5,7 @@ import java.util.List;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
+import com.lps.back.models.Teacher;
 import com.lps.back.utils.SubjectSituationEnum;
 
 public interface ISubjectService {
@@ -25,5 +26,7 @@ public interface ISubjectService {
     SubjectSituationEnum changeStatus(Long id, SubjectSituationEnum situationEnum);
 
     SubjectSituationEnum checkAndUpdateSituation(Subject subject);
+
+    void removeTeacher(Subject subject, Teacher teacher);
 
 }

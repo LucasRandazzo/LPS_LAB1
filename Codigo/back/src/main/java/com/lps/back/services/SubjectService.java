@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
+import com.lps.back.models.Teacher;
 import com.lps.back.repositories.SubjectRepository;
 import com.lps.back.services.interfaces.ISubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
@@ -131,5 +132,11 @@ public class SubjectService implements ISubjectService {
         subject.setSituation(situationEnum);
         this.save(subject);
         return situationEnum;
+    }
+
+    @Override
+    public void removeTeacher(Subject subject, Teacher teacher) {
+        subject.getTeachers().remove(teacher);
+        this.save(subject);
     }
 }

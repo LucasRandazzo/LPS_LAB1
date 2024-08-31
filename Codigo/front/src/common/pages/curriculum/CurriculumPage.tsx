@@ -1,43 +1,31 @@
-import { Delete, Edit } from '@mui/icons-material';
-import AddIcon from '@mui/icons-material/Add';
-import { Button, IconButton, Typography } from '@mui/material';
+import { Delete, Visibility } from '@mui/icons-material';
+import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react';
 import axiosInstance from '../../services/api';
-import CreateCourseModal from './CreateCursoModal';
+import { DisciplinesCurriculumModel } from './DisciplinesCurriculumModel';
 
 
-export const CoursePage = () => {
+export const CurriculumPage = () => {
     const [data, setData] = useState([]);
     const [open, setOpen] = useState(false);
     const [reload, setReload] = useState(true);
-    const [editId, setEditId] = useState<number>();
+    const [disciplines, setDisciplines] = useState([]);
     const [deleteId, setDeleteId] = useState<number>();
     useEffect(() => {
-        getRegistration();
+        getCurriculum();
     }, [reload]);
 
     useEffect(() => {
         if (deleteId) {
-            deleteCourse();
+            deleteCurriculum();
         }
     }, [deleteId]);
 
-
-    const createCurriculum = (courseId) => {
+    const getCurriculum = () => {
         axiosInstance
-        .post('/curriculum',{"courseId": courseId})
-        .then((data) => {
-            setReload(false);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-    }
-    const getRegistration = () => {
-        axiosInstance
-            .get('/course')
+            .get('/curriculum')
             .then((data) => {
                 setData(data.data);
                 setReload(false);
@@ -46,9 +34,9 @@ export const CoursePage = () => {
                 console.log(e);
             });
     };
-    const deleteCourse = () => {
+    const deleteCurriculum = () => {
         axiosInstance
-            .delete(`/course/${deleteId}`)
+            .delete(`/curriculum/${deleteId}`)
             .then((data) => {
                 setReload(true);
             })
@@ -64,7 +52,7 @@ export const CoursePage = () => {
                 grow: true,
             },
             {
-                accessorKey: 'name', 
+                accessorKey: 'course.name', 
                 header: 'Curso',
             }
         ],
@@ -97,10 +85,11 @@ export const CoursePage = () => {
                 <IconButton
                     onClick={() => {
                         setOpen(true);
-                        setEditId(row.original.id)
+                        setDisciplines(row.original.disciplines)
+                        console.log(row.original.disciplines)
                     }}
                 >
-                 <Edit/>
+                 <Visibility/>
                 </IconButton>
                     
                 <IconButton
@@ -109,14 +98,6 @@ export const CoursePage = () => {
                     }}
                 >
                  <Delete color="error" />
-                </IconButton>
-                
-                <IconButton
-                    onClick={() => {
-                        createCurriculum(row.original.id)
-                    }}
-                >
-                 <AddIcon color="success" />
                 </IconButton>
             </Box>
         ),
@@ -152,19 +133,15 @@ export const CoursePage = () => {
     return (
         <>
             <header className="flex justify-between">
-                <Typography variant="h4">Curso</Typography>
-                <Button variant="contained" onClick={() => {
-                    setOpen(!open)
-                }} endIcon={<AddIcon />}>
-                    Adicionar Curso
-                </Button>
+                <Typography variant="h4">Currículos</Typography>
+        
             </header>
 
             <Box display={'grid'} className="my-5">
                 <MaterialReactTable table={table} />
               
             </Box>
-            <CreateCourseModal openModal={open} editId={editId} setEditId={setEditId}setOpenModal={setOpen} setReload={setReload} />
+            <DisciplinesCurriculumModel openModal={open} setOpenModal={setOpen} disciplines={disciplines} setDisciplines={setDisciplines} setReload={setReload} />
         </>
     );
 };

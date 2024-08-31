@@ -17,6 +17,7 @@ interface ICreateCourseModalProps {
   editId?: number;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   setReload: Dispatch<SetStateAction<boolean>>;
+  setEditId: Dispatch<SetStateAction<number | undefined>>;
 }
 
 const CreateCourseModal = (props: ICreateCourseModalProps) => {
@@ -41,6 +42,7 @@ const CreateCourseModal = (props: ICreateCourseModalProps) => {
           });
           props.setReload(true);
           props.setOpenModal(false);
+          props.setEditId(undefined);
         })
         .catch((e) => {
           showNotification({
