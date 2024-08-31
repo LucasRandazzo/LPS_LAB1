@@ -48,7 +48,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
 
   const getCurse = () => {
     axiosInstance
-      .get(`/course`)
+      .get(`/curriculum`)
       .then((response) => {
         console.log(response);
         setCourseData(response.data);
@@ -207,7 +207,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
         <Box display={"grid"} className="my-5">
           <Box display={"grid"} className="my-5 gap-5">
             <label>Selecione um curso</label>
-            <Select
+            <select
               value={courseId}
               onChange={(e) => setCourseId(e.target.value as number)}
             >
@@ -215,12 +215,12 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
                 return courseData.map((course) => {
                   return (
                     <option key={course.id} value={course.id}>
-                      {course.name}
+                      {course.course.name + " " +course.id}
                     </option>
                   );
                 });
               })()}
-            </Select>
+            </select>
           </Box>
 
           <MaterialReactTable table={table} />
