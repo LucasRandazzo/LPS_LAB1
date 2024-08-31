@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lps.back.models.Course;
+import com.lps.back.models.Curriculum;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.SubjectRepository;
@@ -38,8 +38,7 @@ public class SubjectService implements ISubjectService {
         return subjects;
     }
 
-    @Override
-    public void checkSubjectIsAvailable(Subject subject, Long studentId) {
+    private void checkSubjectIsAvailable(Subject subject, Long studentId) {
         switch (subject.getSituation()) {
             case Closed:
                 throw new IllegalArgumentException(
@@ -62,19 +61,20 @@ public class SubjectService implements ISubjectService {
         }
     }
 
-    @Override
-    public void checkSubjectCurseIsValid(Subject subject, Course course) {
-        if (!subject.getCourses().contains(course)) {
+    private void checkSubjectCurseIsValid(Subject subject, Curriculum curriculum) {
+        if (!subject.getCurriculums().contains(curriculum)) {
             throw new IllegalArgumentException(
-                    "The subject " + subject.getName() + " is not part of the course " + course.getName());
+                    "The subject " + subject.getName() + " is not part of the curriculum "
+                            + curriculum.getCourse().getName());
         }
     }
 
     @Override
-    public void checkSubjectsSituation(List<Subject> subjects, Course course, Long studentId) {
+    public void checkSubjectsSituation(List<Subject> subjects, Curriculum curriculum, Long studentId) {
+        this.checkSituation(subjects);
         subjects.forEach(s -> {
             this.checkSubjectIsAvailable(s, studentId);
-            this.checkSubjectCurseIsValid(s, course);
+            this.checkSubjectCurseIsValid(s, curriculum);
 
         });
     }
@@ -97,11 +97,39 @@ public class SubjectService implements ISubjectService {
     @Override
     public List<Subject> getByCurseIdAndSituation(Long id, SubjectSituationEnum situationEnum) {
 
-        return subjectRepository.findByDisciplineCoursesIdAndSituation(id, situationEnum);
+        return subjectRepository.findByDisciplineCurriculumsIdAndSituation(id, situationEnum);
     }
 
     @Override
     public List<Subject> getListByTeacherId(Long id) {
         return subjectRepository.findByTeachersId(id);
+    }
+
+    private void checkSituation(List<Subject> subjects) {
+        for (Subject subject : subjects) {
+            if (checkAndUpdateSituation(subject) != SubjectSituationEnum.Available) {
+                throw new IllegalArgumentException("The subject is not available");
+            }
+
+        }
+    }
+
+    @Override
+    public SubjectSituationEnum checkAndUpdateSituation(Subject subject) {
+
+        if (subject.getRegistrations().size() == 60) {
+            subject.setSituation(SubjectSituationEnum.Closed);
+            this.save(subject);
+        }
+
+        return subject.getSituation();
+    }
+
+    @Override
+    public SubjectSituationEnum changeStatus(Long id, SubjectSituationEnum situationEnum) {
+        Subject subject = this.get(id);
+        subject.setSituation(situationEnum);
+        this.save(subject);
+        return situationEnum;
     }
 }

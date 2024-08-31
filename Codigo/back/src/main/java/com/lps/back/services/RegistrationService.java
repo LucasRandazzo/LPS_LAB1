@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.lps.back.dtos.registration.RegistrationSaveDTO;
 import com.lps.back.dtos.registration.RegistrationsDeleteDTO;
-import com.lps.back.models.Course;
+import com.lps.back.models.Curriculum;
 import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.RegistrationRepository;
-import com.lps.back.services.interfaces.ICourseService;
+import com.lps.back.services.interfaces.ICurriculumService;
 import com.lps.back.services.interfaces.IRegistrationService;
 import com.lps.back.services.interfaces.IStudentService;
 import com.lps.back.services.interfaces.ISubjectService;
@@ -32,7 +32,7 @@ public class RegistrationService implements IRegistrationService {
     private ISubjectService subjectService;
 
     @Autowired
-    private ICourseService courseService;
+    private ICurriculumService courseService;
 
     @Autowired
     private IStudentService studentService;
@@ -47,9 +47,8 @@ public class RegistrationService implements IRegistrationService {
 
         Student student = studentService.get(registrationDTO.studentId());
         List<Subject> subjects = subjectService.getList(registrationDTO.subjectsIds());
-        Course course = courseService.get(registrationDTO.courseId());
+        Curriculum course = courseService.get(registrationDTO.courseId());
         subjectService.checkSubjectsSituation(subjects, course, registrationDTO.studentId());
-
         Registration registration = new Registration(null, student, course, subjects);
         registrationRepository.save(registration);
 

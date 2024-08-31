@@ -11,16 +11,17 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.lps.back.models.Course;
+import com.lps.back.models.Curriculum;
 import com.lps.back.models.Discipline;
 import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.models.Teacher;
 import com.lps.back.repositories.CourseRepository;
+import com.lps.back.repositories.CurriculumRepository;
 import com.lps.back.repositories.DisciplineRepository;
 import com.lps.back.repositories.StudentRepository;
 import com.lps.back.repositories.TeacherRepository;
-import com.lps.back.services.RegistrationService;
 import com.lps.back.services.SubjectService;
 import com.lps.back.utils.SubjectSituationEnum;
 
@@ -29,7 +30,7 @@ import com.lps.back.utils.SubjectSituationEnum;
 @Component
 public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
         @Autowired
-        private CourseRepository courseRepository;
+        private CurriculumRepository curriculumRepository;
 
         @Autowired
         private DisciplineRepository disciplineRepository;
@@ -41,7 +42,7 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
         private StudentRepository studentRepository;;
 
         @Autowired
-        private RegistrationService registrationService;
+        private CourseRepository courseRepository;
 
         @Autowired
         SubjectService subjectService;
@@ -57,18 +58,20 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                                 SecurityConfig.passwordEncoder().encode("password"), new ArrayList<Subject>());
 
                 teacherRepository.save(teacher);
-
-                Course course = new Course(null, "Software Engineer", 100, new ArrayList<Registration>(),
+                Course course1 = new Course(null, "Software Engineer", new ArrayList<Curriculum>());
+                courseRepository.save(course1);
+                Curriculum course = new Curriculum(null, course1,
+                                new ArrayList<Registration>(),
                                 new ArrayList<Discipline>());
 
-                courseRepository.save(course);
+                curriculumRepository.save(course);
 
-                ArrayList<Course> courses = new ArrayList<Course>();
+                ArrayList<Curriculum> courses = new ArrayList<Curriculum>();
                 courses.add(course);
-                Discipline discipline = new Discipline(null, "Laboratório de Desenvolvimento de Software", 100, 500.0,
+                Discipline discipline = new Discipline(null, "Laboratório de Desenvolvimento de Software", 100,
                                 new ArrayList<Subject>(),
                                 courses);
-                Discipline discipline1 = new Discipline(null, "Engenharia de Software ", 100, 500.0,
+                Discipline discipline1 = new Discipline(null, "Engenharia de Software ", 100,
                                 new ArrayList<Subject>(),
                                 courses);
 

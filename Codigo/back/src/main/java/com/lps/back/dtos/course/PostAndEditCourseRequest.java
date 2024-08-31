@@ -1,3 +1,3 @@
 package com.lps.back.dtos.course;
 
-public record PostAndEditCourseRequest(String name, int credits) {}
+public record PostAndEditCourseRequest(String name) {}

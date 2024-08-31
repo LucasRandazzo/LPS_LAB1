@@ -1,8 +1,10 @@
 package com.lps.back.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lps.back.utils.SubjectSituationEnum;
-import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,13 +46,14 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Registration> registrations;
-    
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getName() {
         return discipline.getName();
     }
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public List<Course> getCourses() {
-        return discipline.getCourses();
+    public List<Curriculum> getCurriculums() {
+        return discipline.getCurriculums();
     }
 }

@@ -33,9 +33,6 @@ public class Discipline {
     @Column(name = "credits", nullable = false, unique = false, columnDefinition = "int")
     protected Integer credits;
 
-    @Column(name = "price", nullable = false, columnDefinition = "DOUBLE")
-    protected Double price;
-
     @OneToMany(mappedBy = "discipline", fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Subject> subjects;
@@ -43,5 +40,5 @@ public class Discipline {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "gradle", joinColumns = @JoinColumn(name = "discipline_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    protected List<Course> courses;
+    protected List<Curriculum> curriculums;
 }

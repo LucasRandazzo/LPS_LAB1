@@ -1,16 +1,16 @@
 package com.lps.back.services;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lps.back.dtos.discipline.PostAndEditDisciplineRequest;
-import com.lps.back.models.Course;
+import com.lps.back.models.Curriculum;
 import com.lps.back.models.Discipline;
 import com.lps.back.repositories.DisciplineRepository;
-import com.lps.back.services.interfaces.ICourseService;
+import com.lps.back.services.interfaces.ICurriculumService;
 import com.lps.back.services.interfaces.IDisciplineService;
 
 import jakarta.transaction.Transactional;
@@ -23,7 +23,7 @@ public class DisciplineService implements IDisciplineService {
     private DisciplineRepository disciplineRepository;
 
     @Autowired
-    private ICourseService courseService;
+    private ICurriculumService curriculumservice;
 
     @Override
     public Discipline get(Long id) {
@@ -36,14 +36,13 @@ public class DisciplineService implements IDisciplineService {
 
         createdObj.setName(obj.name());
         createdObj.setCredits(obj.credits());
-        createdObj.setPrice(obj.price());
 
-        ArrayList<Course> courses = new ArrayList<>();
-        for(Long id : obj.coursesIds()){
-            courses.add(this.courseService.get(id));
+        ArrayList<Curriculum> curriculums = new ArrayList<>();
+        for (Long id : obj.curriculumsId()) {
+            curriculums.add(this.curriculumservice.get(id));
         }
-        createdObj.setCourses(courses);
-        
+        createdObj.setCurriculums(curriculums);
+
         return this.disciplineRepository.save(createdObj);
     }
 
@@ -64,15 +63,14 @@ public class DisciplineService implements IDisciplineService {
 
         existingDiscipline.setCredits(newDiscipline.credits());
         existingDiscipline.setName(newDiscipline.name());
-        existingDiscipline.setPrice(newDiscipline.price());
 
-        ArrayList<Course> courses = new ArrayList<>();
-        for(Long id_course : newDiscipline.coursesIds()){
-            courses.add(this.courseService.get(id_course));
+        ArrayList<Curriculum> curriculums = new ArrayList<>();
+        for (Long id_course : newDiscipline.curriculumsId()) {
+            curriculums.add(this.curriculumservice.get(id_course));
         }
-        existingDiscipline.setCourses(courses);
+        existingDiscipline.setCurriculums(curriculums);
 
         return this.disciplineRepository.save(existingDiscipline);
     }
-    
+
 }

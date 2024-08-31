@@ -14,46 +14,35 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class CourseService implements ICourseService {
+public class CurseService implements ICourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseRepository CourseRepository;
 
     @Override
     public Course get(Long id) {
-        Course course = courseRepository.findById(id).get();
+        Course course = CourseRepository.findById(id).get();
         return course;
     }
 
     @Override
     public Course create(PostAndEditCourseRequest newCourse) {
         Course obj = new Course();
-        obj.setCredits(newCourse.credits());
         obj.setName(newCourse.name());
 
-        Course createdCourse = courseRepository.save(obj);
+        Course createdCourse = CourseRepository.save(obj);
         return createdCourse;
     }
 
     @Override
     public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+        return CourseRepository.findAll();
     }
 
     @Override
     public Void deleteCourse(Long id) {
-        courseRepository.deleteById(id);
+        CourseRepository.deleteById(id);
         return null;
     }
 
-    @Override
-    public Course editCourse(Long id, PostAndEditCourseRequest newCourse) {
-        Course existingCourse = this.courseRepository.findById(id).get();
-        existingCourse.setCredits(newCourse.credits());
-        existingCourse.setName(newCourse.name());
-
-        Course savedCourse = this.courseRepository.save(existingCourse);
-
-        return savedCourse;
-    }
 }

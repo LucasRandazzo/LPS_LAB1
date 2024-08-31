@@ -30,7 +30,7 @@ public class Registration {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", nullable = false, unique = false)
-    protected Course course;
+    protected Curriculum course;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "subject_registrations", joinColumns = @JoinColumn(name = "registration_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))

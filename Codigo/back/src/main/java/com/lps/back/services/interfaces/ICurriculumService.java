@@ -4,17 +4,17 @@ package com.lps.back.services.interfaces;
 import java.util.List;
 
 import com.lps.back.dtos.course.PostAndEditCourseRequest;
-import com.lps.back.models.Course;
+import com.lps.back.models.Curriculum;
 
-public interface ICourseService {
+public interface ICurriculumService {
 
-    Course get(Long id);
+    Curriculum get(Long id);
 
     // criar
-    Course create(PostAndEditCourseRequest obj);
+    Curriculum create(PostAndEditCourseRequest obj);
 
     // pegar todos
-    List<Course> getAllCourses();
+    List<Curriculum> getAllCourses();
 
     // deletar
     Void deleteCourse(Long id);
