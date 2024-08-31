@@ -164,7 +164,7 @@ export const CoursePage = () => {
                 <MaterialReactTable table={table} />
               
             </Box>
-            <CreateCourseModal openModal={open} editId={editId}  setOpenModal={setOpen} setReload={setReload} />
+            <CreateCourseModal openModal={open} editId={editId} setEditId={setEditId}setOpenModal={setOpen} setReload={setReload} />
         </>
     );
 };
