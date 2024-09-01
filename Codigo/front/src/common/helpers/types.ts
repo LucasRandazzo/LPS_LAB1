@@ -19,3 +19,10 @@ export type Message = {
     title: string,
     message: string
 }
+
+
+export type UserRecoverPassword = {
+    email: string,
+    password: string,
+    token: string,
+}

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { User, UserLogin, UserToken } from "../helpers/types";
+import { Message, User, UserLogin, UserToken } from "../helpers/types";
 import BaseRepository from "./BaseRepository";
 
 class UserRepository extends BaseRepository {
@@ -19,8 +19,8 @@ class UserRepository extends BaseRepository {
         return response.data
     }
 
-    async recoverpassword(email : string): Promise<any> {
-        return await this.post(email, "register")
+    async recoverpassword(email : string): Promise<AxiosResponse<Message | void>> {
+        return await this.post(email, "recoverpassword")
     }
 
     async checktoken(userToken: UserToken): Promise<boolean> {

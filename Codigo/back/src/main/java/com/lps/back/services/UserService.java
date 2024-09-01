@@ -1,10 +1,15 @@
 package com.lps.back.services;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lps.back.config.SecurityConfig;
 import com.lps.back.dtos.user.UserLoginDTO;
+import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserTokenDto;
 import com.lps.back.mappers.UsuarioMapper;
@@ -49,7 +54,9 @@ public class UserService implements IUserService {
         }
 
         user = UsuarioMapper.dtoToModel(userRegisterDTO);
+        String encryptedPassword = SecurityConfig.passwordEncoder().encode(userRegisterDTO.password());
         user.setId(null);
+        user.setPassword(encryptedPassword);
         usuarioRepository.save(user);
 
         return user;
@@ -57,16 +64,25 @@ public class UserService implements IUserService {
 
     @Override
     public void startRecoverPasswordProcess(String email) {
-        Usuario user = usuarioRepository.findByEmail(email);
+        String decodedEmail;
 
-        if(user == null) {
+        try {
+            decodedEmail = URLDecoder.decode(email, StandardCharsets.UTF_8.name());
+            decodedEmail = decodedEmail.replace("=", "");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Email não enviado");
+        }
+
+        Usuario user = usuarioRepository.findByEmail(decodedEmail);
+
+        if (user == null) {
             throw new EntityNotFoundException("Esse email não pertence a nenhum usuário registrado");
         }
 
-        String token = createToken(email);
+        String token = createToken(decodedEmail);
 
         try {
-            emailSenderService.sendRecoveryPasswordMail(email, token);
+            emailSenderService.sendRecoveryPasswordMail(decodedEmail, token);
         } catch (Exception e) {
             throw new RuntimeException("Email não enviado");
         }
@@ -74,24 +90,26 @@ public class UserService implements IUserService {
 
     @Override
     public boolean checkRecoverPasswordToken(UserTokenDto userTokenDto) {
-        String token = createToken(userTokenDto.email());
-
-        if (token.equals(userTokenDto.token())) {
-            return true;
-        }
-
-        return false;
+        boolean match = matchToken(userTokenDto.token(), userTokenDto.email());
+        return match;
     }
 
     @Override
-    public void changePassword(UserLoginDTO userLoginDTO) {
-        Usuario user = usuarioRepository.findByEmail(userLoginDTO.email());
+    public void changePassword(UserRecoverPasswordDTO userRecoverPasswordDTO) {
+        Usuario user = usuarioRepository.findByEmail(userRecoverPasswordDTO.email());
 
         if (user == null) {
-            throw new IllegalArgumentException("Usuário não encontrado");
+            throw new EntityNotFoundException("Usuário não encontrado");
         }
 
-        user.setPassword(userLoginDTO.password());
+        boolean match = matchToken(userRecoverPasswordDTO.token(), userRecoverPasswordDTO.email());
+
+        if (!match) {
+            throw new IllegalArgumentException("Token Inválido");
+        }
+
+        String newPassword = SecurityConfig.passwordEncoder().encode(userRecoverPasswordDTO.password());
+        user.setPassword(newPassword);
         usuarioRepository.save(user);
     }
 
@@ -107,6 +125,11 @@ public class UserService implements IUserService {
         newToken = newToken.toUpperCase();
 
         return newToken;
+    }
+
+    private boolean matchToken(String token, String email) {
+        String tokenByEmail = createToken(email);
+        return tokenByEmail.equals(token);
     }
 
 }

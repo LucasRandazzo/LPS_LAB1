@@ -1,28 +1,15 @@
-import { Container, TextField, Button } from "@mui/material"
-import React, { ReactNode, useRef } from "react"
-import userService from "../../services/userService"
-import { useSelector } from "react-redux"
-import { User } from "../../helpers/types"
+import { Container } from '@mui/material';
+import React, { ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
 
-
-export const ForgotPassword = () : ReactNode => {
-    //const user = useSelector((state: User) => state.user);
-    const refEmail = useRef<HTMLInputElement>(null);
-
-    const sendEmail = async () => {
-        const email = refEmail.current?.value ?? '';
-        userService.recoverpassword(email);
-    }
+export const ForgotPassword = (): ReactNode => {
 
     return (
         <Container>
             <div>Esqueceu a Senha</div>
-            <TextField label={'Email:'} inputRef={refEmail}/>
-            <Button onSubmit={sendEmail} >
-                Enviar
-            </Button>
+            <Outlet />
         </Container>
-    )
-}
+    );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

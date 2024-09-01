@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lps.back.dtos.user.UserLoginDTO;
+import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserTokenDto;
 import com.lps.back.models.Usuario;
@@ -45,8 +46,8 @@ public class UserController {
     }
 
     @PostMapping("changepassword")
-    public ResponseEntity<?> changePassword(@RequestBody UserLoginDTO userLoginDTO) {
-        userService.changePassword(userLoginDTO);
+    public ResponseEntity<?> changePassword(@RequestBody UserRecoverPasswordDTO userRecoverPasswordDTO) {
+        userService.changePassword(userRecoverPasswordDTO);
         return ResponseEntity.noContent().build();
     }
 

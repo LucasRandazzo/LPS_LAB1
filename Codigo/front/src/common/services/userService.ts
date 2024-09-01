@@ -1,4 +1,5 @@
-import { User, UserLogin, UserToken } from "../helpers/types";
+import { AxiosResponse } from "axios";
+import { Message, User, UserLogin, UserToken } from "../helpers/types";
 import UserRepository from "../repositories/userRepository";
 
 class UserService {
@@ -16,7 +17,7 @@ class UserService {
     return this.userRepository.register(user)
   }
 
-  async recoverpassword(email : string): Promise<void> {
+  async recoverpassword(email : string): Promise<AxiosResponse<Message | void>> {
     return this.userRepository.recoverpassword(email);
   }
 

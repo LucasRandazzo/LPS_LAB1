@@ -19,7 +19,10 @@ import { StudentPage } from "./common/pages/student/StudentPage.tsx";
 import { SubjectPage } from "./common/pages/subjects/Subject.tsx";
 import { TeacherPage } from "./common/pages/teacher/TeacherPage.tsx";
 import LoginPage from "./common/pages/login/LoginPage.tsx";
+import Request from "./common/pages/forgotPassword/request/Request.tsx";
+import CheckToken from "./common/pages/forgotPassword/token/CheckToken.tsx";
 import ForgotPassword from "./common/pages/forgotPassword/ForgotPassword.tsx";
+import ChangePassword from "./common/pages/forgotPassword/change/ChangePassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -64,7 +67,21 @@ const router = createBrowserRouter([
   },
   {
     path: '/forgotpassword',
-    element: <ForgotPassword />
+    element: <ForgotPassword />,
+    children: [
+      {
+        index: true,
+        element: <Request />
+      },
+      {
+        path: 'token',
+        element: <CheckToken />
+      },
+      {
+        path: 'changepassword',
+        element: <ChangePassword />
+      }
+    ]
   }
 ]);
 createRoot(document.getElementById("root")).render(
