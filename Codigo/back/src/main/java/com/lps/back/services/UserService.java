@@ -11,11 +11,16 @@ import com.lps.back.config.SecurityConfig;
 import com.lps.back.dtos.user.UserLoginDTO;
 import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
+import com.lps.back.dtos.user.UserReturnLoginDTO;
 import com.lps.back.dtos.user.UserTokenDto;
 import com.lps.back.mappers.UsuarioMapper;
+import com.lps.back.models.Secretary;
+import com.lps.back.models.Student;
+import com.lps.back.models.Teacher;
 import com.lps.back.models.Usuario;
 import com.lps.back.repositories.UsuarioRepository;
 import com.lps.back.services.interfaces.IUserService;
+import com.lps.back.utils.UsuarioTypesEnum;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -28,7 +33,7 @@ public class UserService implements IUserService {
     EmailSenderService emailSenderService;
 
     @Override
-    public Usuario login(UserLoginDTO userLoginDTO) {
+    public UserReturnLoginDTO login(UserLoginDTO userLoginDTO) {
         Usuario usuario = usuarioRepository.findByEmail(userLoginDTO.email());
 
         if (usuario == null) {
@@ -42,7 +47,18 @@ public class UserService implements IUserService {
             throw new IllegalArgumentException("Senha incorreta");
         }
 
-        return usuario;
+        UsuarioTypesEnum userType;
+        if (usuario instanceof Teacher) {
+            userType = UsuarioTypesEnum.TEACHER;
+        } else if (usuario instanceof Student) {
+            userType = UsuarioTypesEnum.STUDENT;
+        } else if (usuario instanceof Secretary) {
+            userType = UsuarioTypesEnum.SECRETARY;
+        } else {
+            throw new IllegalArgumentException("Tipo de usuário não reconhecido");
+        }
+
+        return UsuarioMapper.modelToDto(usuario, userType);
     }
 
     @Override

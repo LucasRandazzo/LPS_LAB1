@@ -12,6 +12,7 @@ const initialState : UserSlice = {
     email: null,
     name: null,
     password: null,
+    userType: null
   },
   forgotPasswordUser: {
     email: null,

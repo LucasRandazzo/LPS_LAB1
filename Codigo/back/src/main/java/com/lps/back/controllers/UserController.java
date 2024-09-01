@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lps.back.dtos.user.UserLoginDTO;
 import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
+import com.lps.back.dtos.user.UserReturnLoginDTO;
 import com.lps.back.dtos.user.UserTokenDto;
 import com.lps.back.models.Usuario;
 import com.lps.back.services.interfaces.IUserService;
@@ -23,7 +24,7 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
-        Usuario result = userService.login(userLoginDTO);
+        UserReturnLoginDTO result = userService.login(userLoginDTO);
         return ResponseEntity.ok(result);
     }
 

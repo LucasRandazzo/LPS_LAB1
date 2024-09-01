@@ -3,7 +3,6 @@ package com.lps.back.config;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.poi.hpsf.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +15,14 @@ import com.lps.back.models.Course;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Discipline;
 import com.lps.back.models.Registration;
+import com.lps.back.models.Secretary;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.models.Teacher;
 import com.lps.back.repositories.CourseRepository;
 import com.lps.back.repositories.CurriculumRepository;
 import com.lps.back.repositories.DisciplineRepository;
+import com.lps.back.repositories.SecretaryRepository;
 import com.lps.back.repositories.StudentRepository;
 import com.lps.back.repositories.TeacherRepository;
 import com.lps.back.services.EmailSenderService;
@@ -53,6 +54,9 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
         @Autowired
         EmailSenderService emailSenderService;
 
+        @Autowired
+        SecretaryRepository secretaryRepository;
+
         @Override
         public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE");
@@ -60,6 +64,10 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
         @Override
         public void run(String... args) throws Exception {
+                Secretary secretary = new Secretary(null, "Secretaria", "secret@gmail.com".toLowerCase(),
+                                SecurityConfig.passwordEncoder().encode("password"));
+                secretaryRepository.save(secretary);
+
                 Teacher teacher = new Teacher(null, "teacher", "teacher@gmail.com",
                                 SecurityConfig.passwordEncoder().encode("password"), new ArrayList<Subject>());
 
@@ -119,6 +127,6 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
                 studentRepository.saveAll(Arrays.asList(student, student1, student2, student3));
 
-                emailSenderService.sendRecoveryPasswordMail("12321asdas@gmail.com","12321321");
+                emailSenderService.sendRecoveryPasswordMail("12321asdas@gmail.com", "12321321");
         }
 }

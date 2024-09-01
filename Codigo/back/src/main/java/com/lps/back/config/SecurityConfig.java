@@ -27,17 +27,8 @@ public class SecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(authz -> authz
-                                                .requestMatchers("/**").permitAll()
-                                                .requestMatchers("/auth/**", "/public/**", "/v3/api-docs",
-                                                                "/configuration/ui",
-                                                                "/swagger-resources/**", "/configuration/security",
-                                                                "/swagger-ui/**")
-                                                .permitAll()
-                                                .requestMatchers("/h2-console/**").permitAll()
-                                                .requestMatchers("/subject/**")
-                                                .permitAll() .requestMatchers("/user/**")
-                                                .permitAll());
-                                                
+                                                .requestMatchers("/**").permitAll());
+
                 http.headers(headers -> headers
                                 .frameOptions(frameOptions -> frameOptions
                                                 .sameOrigin()));
@@ -46,8 +37,7 @@ public class SecurityConfig {
         }
 
         @Bean
-        public
-        static PasswordEncoder passwordEncoder() {
+        public static PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }
 

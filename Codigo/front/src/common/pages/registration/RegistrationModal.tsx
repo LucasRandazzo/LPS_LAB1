@@ -19,6 +19,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNotification } from "../../hooks/useNotification";
 import axiosInstance from "../../services/api";
 interface IRegistrationRegisterModelProps {
@@ -70,11 +71,16 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
       .catch((e) => {
         console.error(e);
       });
-  };
+  };  
+  
+  const { user } = useSelector(state => state.userReducer);
+  console.log(1,user)
+
+
   const makeRegistration = () => {
-    if (courseId) {
+    if (courseId && subjectsIds.length > 0 && user) {
       const registrationBody: RegistrationBody = {
-        studentId: 4, //add user id
+        studentId: user.id, //add user id
         subjectsIds: subjectsIds,
         courseId: courseId,
       };
@@ -96,6 +102,12 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
             title: e.response.data.title,
           });
         });
+    } else {
+      showNotification({
+        message:"Cofira todos os campos",
+        type: "error",
+        title: "Matricula invalida",
+      });
     }
   };
 
