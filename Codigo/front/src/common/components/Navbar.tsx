@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 interface INavBar {
@@ -46,7 +47,7 @@ export default function PrimarySearchAppBar(props: INavBar) {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+    const { user } = useSelector((state) => state.userReducer);
     const navigate = useNavigate();
 
     const handleProfileMenuOpen = (
@@ -106,6 +107,7 @@ export default function PrimarySearchAppBar(props: INavBar) {
                 <Avatar sx={{ mr: 1 }}>
                 </Avatar>
                 <Box>
+                  {user.name }
                 </Box>
             </Box>
             <MenuItem onClick={openLogoutDialog}>
