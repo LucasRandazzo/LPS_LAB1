@@ -1,14 +1,16 @@
 import { Delete } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react';
 import axiosInstance from '../../services/api';
+import CreateUserModal from '../../components/CreateUserModal';
 
 
 export const TeacherPage = () => {
     const [data, setData] = useState([]);
     const [reload, setReload] = useState(true);
+    const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState<number>();
     useEffect(() => {
         getTeacher();
@@ -126,14 +128,17 @@ export const TeacherPage = () => {
     return (
         <>
             <header className="flex justify-between">
-                <Typography variant="h4">Professores</Typography>
-        
+                <Typography variant="h4">Professor</Typography>
+                <Button onClick={() => {
+                    setOpen(true);
+                }}>Cadastrar Professor</Button>
             </header>
 
             <Box display={'grid'} className="my-5">
                 <MaterialReactTable table={table} />
               
             </Box>
+            <CreateUserModal typeUser={'TEACHER'} openModal={open} setOpenModal={setOpen} setReload={setReload}/>
         </>
     );
 };
