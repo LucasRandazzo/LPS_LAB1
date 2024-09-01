@@ -15,7 +15,9 @@ export const SubjectPage = () => {
     const [open, setOpen] = useState(false);
     const [reload, setReload] = useState(true);
     
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.userReducer);
+    console.log(1,user)
+
     useEffect(() => {
         getSubjects();
     }, [reload]);

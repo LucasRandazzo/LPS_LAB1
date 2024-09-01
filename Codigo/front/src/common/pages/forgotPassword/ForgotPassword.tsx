@@ -1,21 +1,23 @@
 import { Container, TextField, Button } from "@mui/material"
-import React, { ReactNode } from "react"
+import React, { ReactNode, useRef } from "react"
 import userService from "../../services/userService"
-import { useSelector, UseSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { User } from "../../helpers/types"
 
 
 export const ForgotPassword = () : ReactNode => {
-    const user = useSelector((state: User) => state.user);
+    //const user = useSelector((state: User) => state.user);
+    const refEmail = useRef<HTMLInputElement>(null);
 
-    const sendEmail = () => {
-        userService.recoverpassword(user.email)
+    const sendEmail = async () => {
+        const email = refEmail.current?.value ?? '';
+        userService.recoverpassword(email);
     }
 
     return (
         <Container>
             <div>Esqueceu a Senha</div>
-            <TextField label={'Email:'} />
+            <TextField label={'Email:'} inputRef={refEmail}/>
             <Button onSubmit={sendEmail} >
                 Enviar
             </Button>

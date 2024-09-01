@@ -57,12 +57,18 @@ public class UserService implements IUserService {
 
     @Override
     public void startRecoverPasswordProcess(String email) {
+        Usuario user = usuarioRepository.findByEmail(email);
+
+        if(user == null) {
+            throw new EntityNotFoundException("Esse email não pertence a nenhum usuário registrado");
+        }
+
         String token = createToken(email);
 
         try {
             emailSenderService.sendRecoveryPasswordMail(email, token);
         } catch (Exception e) {
-            throw new EntityNotFoundException("Email inixistente");
+            throw new RuntimeException("Email não enviado");
         }
     }
 

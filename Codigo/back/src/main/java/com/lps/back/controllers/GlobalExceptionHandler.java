@@ -38,4 +38,10 @@ public class GlobalExceptionHandler {
         MessageDTO message = new MessageDTO("NoHandlerFoundException", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<MessageDTO> runtimeException(RuntimeException e) {
+        MessageDTO message = new MessageDTO("Exception", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
+    }
 }

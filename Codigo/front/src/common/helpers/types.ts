@@ -14,3 +14,8 @@ export type UserToken = {
     email: string | null,
     token: string | null
 }
+
+export type Message = {
+    title: string,
+    message: string
+}

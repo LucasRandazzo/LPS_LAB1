@@ -19,8 +19,8 @@ class UserRepository extends BaseRepository {
         return response.data
     }
 
-    async recoverpassword(email : string): Promise<void> {
-        await this.post(email, "register")
+    async recoverpassword(email : string): Promise<any> {
+        return await this.post(email, "register")
     }
 
     async checktoken(userToken: UserToken): Promise<boolean> {

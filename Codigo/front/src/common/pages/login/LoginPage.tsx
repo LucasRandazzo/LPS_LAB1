@@ -134,7 +134,7 @@ const LoginPage = () => {
                                 color: 'black',
                             }}
                             onClick={() => {
-                                navigate('/forgotPassword/email');
+                                navigate('/forgotPassword');
                             }}
                         >
                             Esqueceu sua senha?
