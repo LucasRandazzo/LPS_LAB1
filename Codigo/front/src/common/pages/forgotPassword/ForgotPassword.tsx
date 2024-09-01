@@ -1,13 +1,15 @@
 import { Container } from '@mui/material';
 import React, { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Box, Title } from './style'
 
 export const ForgotPassword = (): ReactNode => {
 
     return (
         <Container>
-            <div>Esqueceu a Senha</div>
-            <Outlet />
+            <Box>
+                <Outlet />
+            </Box>
         </Container>
     );
 };

@@ -6,6 +6,7 @@ import { UserRecoverPassword, UserToken } from '../../../helpers/types';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import * as Input from '../../../../styles/types/InputStyles';
+import { Title } from '../style';
 
 const ChangePassword = () => {
     const refPassword = useRef<HTMLInputElement>(null);
@@ -42,6 +43,7 @@ const ChangePassword = () => {
 
     return (
         <Container>
+            <Title>Incira sua nova senha</Title>
             <TextField
                 id="password"
                 label="Senha: "

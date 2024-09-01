@@ -6,6 +6,8 @@ import { UserToken } from '../../../helpers/types';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { confirmedToken } from '../../../redux/user/slice';
+import * as Input from '../../../../styles/types/InputStyles';
+import { Title } from '../style';
 
 const CheckToken = () => {
     const refToken = useRef<HTMLInputElement>(null);
@@ -33,11 +35,15 @@ const CheckToken = () => {
 
     return (
         <Container>
+            <Title>Incira o token recebido pelo email</Title>
             <TextField
                 label={'Token:'}
                 inputRef={refToken}
                 type={'text'}
                 placeholder={'Incira o token recebido por email'}
+                fullWidth
+                margin="normal"
+                sx={Input.input}
                 slotProps={{
                     input: {
                       inputMode: 'text', // Define que o campo aceita texto
