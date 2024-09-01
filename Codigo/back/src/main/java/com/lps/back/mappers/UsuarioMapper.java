@@ -14,15 +14,15 @@ public class UsuarioMapper {
 
         switch (userRegisterDTO.userType()) {
             case STUDENT:
-                usuario = new Student(userRegisterDTO.name(), userRegisterDTO.email(), userRegisterDTO.password());
+                usuario = new Student(userRegisterDTO.name(), userRegisterDTO.email(), null);
                 break;
 
             case TEACHER:
-                usuario = new Teacher(userRegisterDTO.name(), userRegisterDTO.email(), userRegisterDTO.password());
+                usuario = new Teacher(userRegisterDTO.name(), userRegisterDTO.email(), null);
                 break;
 
             case SECRETARY:
-                usuario = new Secretary(userRegisterDTO.name(), userRegisterDTO.email(), userRegisterDTO.password());
+                usuario = new Secretary(userRegisterDTO.name(), userRegisterDTO.email(), null);
                 break;
 
             default:

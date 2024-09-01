@@ -22,6 +22,7 @@ import com.lps.back.repositories.UsuarioRepository;
 import com.lps.back.services.interfaces.IUserService;
 import com.lps.back.utils.UsuarioTypesEnum;
 
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -70,11 +71,18 @@ public class UserService implements IUserService {
         }
 
         user = UsuarioMapper.dtoToModel(userRegisterDTO);
-        String encryptedPassword = SecurityConfig.passwordEncoder().encode(userRegisterDTO.password());
+        String password = this.createToken(userRegisterDTO.email());
+        String encryptedPassword = SecurityConfig.passwordEncoder().encode(password);
         user.setId(null);
         user.setPassword(encryptedPassword);
         usuarioRepository.save(user);
-
+        try {
+            emailSenderService.sendNewUser(user.getEmail(), password);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
