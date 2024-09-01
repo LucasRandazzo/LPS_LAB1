@@ -15,7 +15,7 @@ export const SubjectPage = () => {
     const [open, setOpen] = useState(false);
     const [reload, setReload] = useState(true);
     
-    const user = useSelector(state => state.userReducer);
+    const { user } = useSelector(state => state.userReducer);
     console.log(1,user)
 
     useEffect(() => {
@@ -117,7 +117,7 @@ export const SubjectPage = () => {
                 
                 <IconButton
                     onClick={() => {
-                        setSubjectSelectedId(row.original.id as number);
+                        setSubjectSelectedId(10 as number);
                         
                         
                     }}
@@ -166,7 +166,7 @@ export const SubjectPage = () => {
                 <MaterialReactTable table={table} />
               
             </Box>
-            <StudentRegistrationInSubject openModal={open}  data={studentData} setOpenModal={setOpen} setReload={setReload} />
+            <StudentRegistrationInSubject openModal={open} data={[]} setOpenModal={setOpen} setReload={setReload} />
 
         </>
     );

@@ -18,7 +18,7 @@ export const RegistrationPage = () => {
     const [openRegisterModel, setOpenRegisterModel] = useState(false);
     const [reload, setReload] = useState(true);
 
-    const user = useSelector(state => state.user);
+    const { user } = useSelector(state => state.userReducer);
 
     useEffect(() => {
         getRegistration();
