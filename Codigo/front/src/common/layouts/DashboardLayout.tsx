@@ -19,7 +19,7 @@ interface DashboardLayoutProps {
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     const [openNavBar, setOpenNavBar] = useState<boolean>(false);
     var data:Data[]= []
-    
+
     const { user } = useSelector(state => state.userReducer);
 
     switch (user.userType) {
@@ -30,7 +30,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
            break;
            case 'TEACHER':
                data = [
-                   { id: 1, icon: <GradingIcon />, label: 'Materias', location: '/subjects' },
+                   { id: 1, icon: <GradingIcon />, label: 'Materias', location: '/teacherSubject' },
                ]
            break;
            case 'SECRETARY':
@@ -39,6 +39,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                    { id: 2, icon: <BookIcon />, label: 'Curriculos', location: '/curriculum' },
                    { id: 3, icon: <PersonIcon />, label: 'Estudantes', location: '/student' },
                    { id: 4, icon: <AssignmentIndIcon />, label: 'Professores', location: '/teacher' },
+                   { id: 4, icon: <GradingIcon  />, label: 'Professores', location: '/subjects' },
                ]
            break;
        default:
