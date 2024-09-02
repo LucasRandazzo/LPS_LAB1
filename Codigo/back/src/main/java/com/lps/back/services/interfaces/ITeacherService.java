@@ -12,6 +12,7 @@ public interface ITeacherService {
     Teacher get(Long id);
 
     List<Teacher> getAll();
+    List<Teacher> getAllByIds(List<Long> ids);
 
     List<Subject> getSubjects(Long teacherId);
 

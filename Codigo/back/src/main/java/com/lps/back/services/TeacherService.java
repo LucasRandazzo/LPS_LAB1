@@ -75,4 +75,9 @@ public class TeacherService implements ITeacherService {
         this.teacherRepository.delete(teacher);
     }
 
+    @Override
+    public List<Teacher> getAllByIds(List<Long> ids) {
+        return teacherRepository.findAllById(ids);
+    }
+
 }

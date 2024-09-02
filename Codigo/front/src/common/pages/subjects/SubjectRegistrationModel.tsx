@@ -3,112 +3,89 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import Checkbox from "@mui/material/Checkbox";
 
 import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    Input,
+    InputLabel,
+    MenuItem,
+    Select,
 } from "@mui/material";
 import {
-  MaterialReactTable,
-  useMaterialReactTable,
+    MaterialReactTable,
+    useMaterialReactTable,
 } from "material-react-table";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNotification } from "../../hooks/useNotification";
 import axiosInstance from "../../services/api";
-interface IRegistrationRegisterModelProps {
+interface ISubjectRegistrationModelProps {
   openModal: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
-interface RegistrationBody {
-  studentId: number;
-  subjectsIds: number[];
-  courseId: number;
-}
-const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
-  const [subjectsIds, setSubjectsIds] = React.useState<number[]>([]);
-  const [courseId, setCourseId] = React.useState<number>();
-  const [courseData, setCourseData] = React.useState<any[]>([]);
-  const [subjectData, setSubjectData] = React.useState<any[]>([]);
 
+const SubjectRegistrationModel = (props: ISubjectRegistrationModelProps) => {
+  const [teachersIds, setTeachersIds] = React.useState<number[]>([]);
+  const [disciplineId, setDisciplineId] = React.useState<number>();
+  const [disciplineData, setDisciplineData] = React.useState<any[]>([]);
+  const [teachersData, setTeachers] = React.useState<any[]>([]);
+const [value, setValue] = React.useState<number>();
   useEffect(() => {
-    setSubjectsIds([]);
-    setCourseId(undefined);
-    setSubjectData([]);
+    setTeachersIds([]);
+    setDisciplineId(undefined);
     getCurse();
+    getTeachers();
   }, [props.openModal]);
 
-  useEffect(() => {
-    getSubjects();
-  }, [courseId]);
   const { showNotification } = useNotification();
 
   const getCurse = () => {
     axiosInstance
-      .get(`/curriculum`)
+      .get(`/discipline`)
       .then((response) => {
         console.log(response);
-        setCourseData(response.data);
+        setDisciplineData(response.data);
       })
       .catch((e) => {
         console.error(e);
       });
   };
-  const getSubjects = () => {
+  const getTeachers = () => {
     axiosInstance
-      .get(`/subject/course/${courseId}/Available`)
+      .get(`/teacher`)
       .then((response) => {
         console.log(response);
-        setSubjectData(response.data);
+        setTeachers(response.data);
       })
       .catch((e) => {
         console.error(e);
       });
-  };  
-  
-  const { user } = useSelector(state => state.userReducer);
-  console.log(1,user)
-
+  };
 
   const makeRegistration = () => {
-    if (courseId && subjectsIds.length > 0 && user) {
-      const registrationBody: RegistrationBody = {
-        studentId: user.id, //add user id
-        subjectsIds: subjectsIds,
-        courseId: courseId,
-      };
-      axiosInstance
-        .post(`/registration`, registrationBody)
-        .then((response) => {
-          showNotification({
+    axiosInstance.post("/subject", {
+        disciplineId: disciplineId,
+        teachersIds: teachersIds,
+        price: value}).then((response) => {
+        showNotification({
             message: response.data.message,
             type: "success",
             title: response.data.title,
-          });
-          props.setReload(true);
-          props.setOpenModal(false);
-        })
-        .catch((e) => {
-          showNotification({
+            });
+        props.setReload(true);
+        props.setOpenModal(false);
+    }).catch((e) => {
+        showNotification({
             message: e.response.data.message,
             type: "error",
             title: e.response.data.title,
-          });
-        });
-    } else {
-      showNotification({
-        message:"Cofira todos os campos",
-        type: "error",
-        title: "Matricula invalida",
-      });
-    }
+            });
+    });
+
   };
 
   const handleClose = () => {
@@ -123,23 +100,12 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
         grow: true,
       },
       {
-        accessorKey: "discipline.name",
-        header: "Disciplina",
+        accessorKey: "name",
+        header: "Nome",
       },
       {
-        accessorKey: "price",
-        header: "Valor",
-        Cell: ({ renderedCellValue }) => {
-          return `R$ ${renderedCellValue}`;
-        },
-      },
-      {
-        accessorKey: "situation",
-        header: "Situação",
-      },
-      {
-        accessorKey: "discipline.credits",
-        header: "Creditos",
+        accessorKey: "email",
+        header: "Email",
       },
     ],
     []
@@ -147,7 +113,7 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
   const table = useMaterialReactTable({
     columns,
     enableDensityToggle: false,
-    data: subjectData,
+    data: teachersData,
     //passing the static object variant if no dynamic logic is needed
     muiSelectCheckboxProps: {
       color: "secondary", //makes all checkboxes use the secondary color
@@ -170,12 +136,12 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
         <Checkbox
           className="checkBox"
           onClick={() => {
-            if (row.original.id && subjectsIds.includes(row.original.id)) {
-              setSubjectsIds(
-                subjectsIds.filter((item) => item !== row.original.id)
+            if (row.original.id && teachersIds.includes(row.original.id)) {
+              setTeachersIds(
+                teachersIds.filter((item) => item !== row.original.id)
               );
             } else {
-              setSubjectsIds([...subjectsIds, row.original.id as number]);
+              setTeachersIds([...teachersIds, row.original.id as number]);
             }
           }}
         />
@@ -223,23 +189,27 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
           <Box display={"grid"} className="my-5 gap-5">
             <FormControl fullWidth>
               <InputLabel id="course-select-label">
-                Selecione um curso
+                Selecione uma Disciplina
               </InputLabel>
               <Select
                 labelId="course-select-label"
-                value={courseId}
-                onChange={(e) => setCourseId(e.target.value as number)}
+                value={disciplineId}
+                onChange={(e) => setDisciplineId(e.target.value as number)}
                 fullWidth
               >
                 <MenuItem value="">
-                  <em>Selecione um curso</em>
+                  <em>Selecione um </em>
                 </MenuItem>
-                {courseData.map((course) => (
-                  <MenuItem key={course.id} value={course.id}>
-                    {course.course.name + " - " + course.id}
+                {disciplineData.map((discipline) => (
+                  <MenuItem key={discipline.id} value={discipline.id}>
+                    {discipline.name}
                   </MenuItem>
                 ))}
               </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel> Informe um valor</InputLabel>
+              <Input type="number" id="value" onChange={(e) => {setValue(e.target.value)}} />
             </FormControl>
           </Box>
 
@@ -254,4 +224,4 @@ const RegistrationRegisterModel = (props: IRegistrationRegisterModelProps) => {
     </Dialog>
   );
 };
-export default RegistrationRegisterModel;
+export default SubjectRegistrationModel;
