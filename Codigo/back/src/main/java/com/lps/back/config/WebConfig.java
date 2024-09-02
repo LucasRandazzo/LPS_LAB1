@@ -3,7 +3,6 @@ package com.lps.back.config;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.poi.hpsf.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +15,14 @@ import com.lps.back.models.Course;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Discipline;
 import com.lps.back.models.Registration;
+import com.lps.back.models.Secretary;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.models.Teacher;
 import com.lps.back.repositories.CourseRepository;
 import com.lps.back.repositories.CurriculumRepository;
 import com.lps.back.repositories.DisciplineRepository;
+import com.lps.back.repositories.SecretaryRepository;
 import com.lps.back.repositories.StudentRepository;
 import com.lps.back.repositories.TeacherRepository;
 import com.lps.back.services.EmailSenderService;
@@ -45,6 +46,9 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
         private StudentRepository studentRepository;;
 
         @Autowired
+        private SecretaryRepository secretaryRepository;
+
+        @Autowired
         private CourseRepository courseRepository;
 
         @Autowired
@@ -64,6 +68,11 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                                 SecurityConfig.passwordEncoder().encode("password"), new ArrayList<Subject>());
 
                 teacherRepository.save(teacher);
+
+                Secretary secretary = new Secretary(null, "secretary", "secretary@gmail.com",
+                                SecurityConfig.passwordEncoder().encode("password"));
+
+                secretaryRepository.save(secretary);
                 Course course1 = new Course(null, "Software Engineer", new ArrayList<Curriculum>());
                 courseRepository.save(course1);
                 Curriculum course = new Curriculum(null, course1,

@@ -23,6 +23,7 @@ import Request from "./common/pages/forgotPassword/request/Request.tsx";
 import CheckToken from "./common/pages/forgotPassword/token/CheckToken.tsx";
 import ForgotPassword from "./common/pages/forgotPassword/ForgotPassword.tsx";
 import ChangePassword from "./common/pages/forgotPassword/change/ChangePassword.tsx";
+import { DisciplinePage } from "./common/pages/disciplines/Discipline.tsx";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +59,10 @@ const router = createBrowserRouter([
         path: "/teacher",
         element: <TeacherPage />,
       },
-
+      {
+        path: "/disciplines",
+        element: <DisciplinePage />
+      }
     ],
   },
   {

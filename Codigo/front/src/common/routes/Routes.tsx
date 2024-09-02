@@ -9,6 +9,7 @@ import { RegistrationPage } from '../pages/registration/Registration';
 import { StudentPage } from '../pages/student/StudentPage';
 import { SubjectPage } from '../pages/subjects/Subject';
 import { TeacherPage } from '../pages/teacher/TeacherPage';
+import { DisciplinePage } from '../pages/disciplines/Discipline';
 
 export const RouterRoutes = () => {
     return (
@@ -49,6 +50,10 @@ export const RouterRoutes = () => {
                     <Route path="/teacher" element={ 
                     <DashboardLayout>
                         <TeacherPage />
+                    </DashboardLayout>} />
+                    <Route path="/disciplines" element={ 
+                    <DashboardLayout>
+                        <DisciplinePage />
                     </DashboardLayout>} />
                     <Route path="/login" element={<LoginPage/>} />
                 </Routes>
