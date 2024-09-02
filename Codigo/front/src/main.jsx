@@ -9,7 +9,7 @@ import "./styles/global.css";
 import { Theme } from "./styles/themes/theme.tsx";
 
 import { RouterProvider } from "react-router-dom";
-import SystemRoutes from "./routes/SystemRoutes.tsx";
+import SystemRoutes from "./common/routes/Routes.tsx";
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={Theme}>

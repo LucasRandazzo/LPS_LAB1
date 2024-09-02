@@ -16,7 +16,7 @@ import { SubjectPage } from '../pages/subjects/SubjectsPage.tsx';
 import { TeacherSubjectPage } from '../pages/subjects/TeacherSubjectPage.tsx';
 import { TeacherPage } from '../pages/teacher/TeacherPage';
 
-export const SystemRoutes = createBrowserRouter([
+const SystemRoutes = createBrowserRouter([
     {
       path: "/",
       element: <App />,
@@ -80,3 +80,5 @@ export const SystemRoutes = createBrowserRouter([
       ]
     }
   ]);
+
+  export default SystemRoutes;
