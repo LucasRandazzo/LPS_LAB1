@@ -3,6 +3,7 @@ package com.lps.back.services.interfaces;
 import java.util.List;
 
 import com.lps.back.dtos.subject.SubjectDTO;
+import com.lps.back.dtos.subject.SubjectRegisterDTO;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
@@ -24,7 +25,7 @@ public interface ISubjectService {
 
     List<Subject> getByCurseIdAndSituation(Long id, SubjectSituationEnum situationEnum);
 
-    void save(Subject subject);
+    void save(SubjectRegisterDTO subject);
 
     SubjectSituationEnum changeStatus(Long id, SubjectSituationEnum situationEnum);
 

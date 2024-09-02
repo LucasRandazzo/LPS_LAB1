@@ -1,26 +1,32 @@
+import { Delete } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react';
 import axiosInstance from '../../services/api';
+import SubjectRegistrationModel from './SubjectRegistrationModel';
 
 
 export const SubjectPage = () => {
     const [data, setData] = useState([]);
-    const [subjectData, setSubjectData] = useState([]);
-    const [registrationId, setRegistrationId] = useState();
     const [open, setOpen] = useState(false);
-    const [openRegisterModel, setOpenRegisterModel] = useState(false);
     const [reload, setReload] = useState(true);
 
+    const [deleteId, setDeleteId] = useState<number>();
 
     useEffect(() => {
-        getRegistration();
+        getSubject();
     }, [reload]);
 
+    useEffect(() => {
+        if (deleteId) {
+            deleteSubject();
+        }
+    }
+    , [deleteId]);
 
-    const getRegistration = () => {
+    const getSubject = () => {
         axiosInstance
         .get('/subject')
         .then((data) => {
@@ -28,9 +34,20 @@ export const SubjectPage = () => {
             setReload(false);
         })
         .catch((e) => {
+            setData([]);
             console.log(e);
         });
     };
+    const deleteSubject = () => {   
+        axiosInstance
+        .delete(`/subject/${deleteId}`)
+        .then((data) => {
+            setReload(true);
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+    }
 
     const columns = useMemo(
         () => [
@@ -88,9 +105,17 @@ export const SubjectPage = () => {
           },
         },
         renderRowActions: ({ row }) => (
-          <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
-           
-          </Box>
+            <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+                
+
+            <IconButton
+                onClick={() => {
+                    setDeleteId(row.original.id)
+                }}
+            >
+             <Delete color="error" />
+            </IconButton>
+        </Box>
         ),
     
         muiTableContainerProps: {
@@ -126,7 +151,7 @@ export const SubjectPage = () => {
             <header className="flex justify-between">
                 <Typography variant="h4">Materias Cadastradas</Typography>
                 <Button variant="contained" onClick={() => {
-                    setOpenRegisterModel(!openRegisterModel)
+                    setOpen(!open)
                 }} endIcon={<AddIcon />}>
                     Adicionar Materia
                 </Button>
@@ -135,6 +160,7 @@ export const SubjectPage = () => {
             <Box display={'grid'} className="my-5">
                 <MaterialReactTable table={table} />
             </Box>
+            <SubjectRegistrationModel openModal={open} setOpenModal={setOpen} setReload={setReload} />
         </>
     );
 };
