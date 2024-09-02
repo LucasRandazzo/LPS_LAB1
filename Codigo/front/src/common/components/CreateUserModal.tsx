@@ -19,6 +19,9 @@ interface CreateUserModalProps {
   openModal: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   setReload: Dispatch<SetStateAction<boolean>>;
+  updateName: string | undefined;
+  updateEmail: string | undefined;
+  userId: number | undefined;
 }
 
 const CreateUserModal: React.FC<CreateUserModalProps> = ({
@@ -26,6 +29,9 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
   openModal,
   setOpenModal,
   setReload,
+  updateName,
+  updateEmail,
+  userId,
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,8 +45,8 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
   };
   const { showNotification } = useNotification();
   useEffect(() => {
-    setName("");
-    setEmail("");
+    setName(updateName || "");
+    setEmail(updateEmail || "");
   }, [openModal]);
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -48,31 +54,54 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
     const user: User = {
       name: name,
       email: email,
-      id: null,
+      id: userId || null,
       password: null,
       userType: typeUser,
     };
     setLoading(true);
-    axiosInstance
-      .post("/user/register", user)
-      .then((data) => {
-        setReload(true);
-        showNotification({
-          message: "User created successfully",
-          type: "success",
-          title: "User created",
+    if (userId) {
+      axiosInstance
+        .put("/user/update", user)
+        .then((data) => {
+          setReload(true);
+          showNotification({
+            message: "Usuario atualizado com sucesso",
+            type: "success",
+            title: "Usuario atualizado",
+          });
+          setLoading(false);
+          handleClose();
+        })
+        .catch((e) => {
+          console.log(e);
+          showNotification({
+            message: e.response.data.message,
+            type: "error",
+            title: e.response.data.title,
+          });
         });
-        setLoading(false);
-        handleClose();
-      })
-      .catch((e) => {
-        console.log(e);
-        showNotification({
-          message: e.response.data.message,
-          type: "error",
-          title: e.response.data.title,
+    } else {
+      axiosInstance
+        .post("/user/register", user)
+        .then((data) => {
+          setReload(true);
+          showNotification({
+            message: "usuario criado com sucesso",
+            type: "success",
+            title: "Usuario criado",
+          });
+          setLoading(false);
+          handleClose();
+        })
+        .catch((e) => {
+          console.log(e);
+          showNotification({
+            message: e.response.data.message,
+            type: "error",
+            title: e.response.data.title,
+          });
         });
-      });
+    }
   };
 
   const handleClose = () => {
@@ -89,7 +118,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
         pointerEvents: loading ? "none" : "auto",
       }}
     >
-      <DialogTitle>Create User </DialogTitle>
+      <DialogTitle>{userId ? "Atualizar": "Cadastrar"} User </DialogTitle>
       <DialogContent>
         <CircularProgress
           sx={{
@@ -99,7 +128,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
             left: "45%",
           }}
         />
-   <IconButton
+        <IconButton
           edge="start"
           color="inherit"
           onClick={handleClose}
@@ -118,7 +147,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
             <Input type="email" value={email} onChange={handleEmailChange} />
           </Box>
           <Button type="submit" color="primary">
-            Register
+          {userId ? "Atualizar": "Cadastrar"}   
           </Button>
         </form>
       </DialogContent>

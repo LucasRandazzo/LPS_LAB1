@@ -13,6 +13,7 @@ import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserReturnLoginDTO;
 import com.lps.back.dtos.user.UserTokenDto;
+import com.lps.back.dtos.user.UserUpdateDTO;
 import com.lps.back.mappers.UsuarioMapper;
 import com.lps.back.models.Secretary;
 import com.lps.back.models.Student;
@@ -154,6 +155,14 @@ public class UserService implements IUserService {
     private boolean matchToken(String token, String email) {
         String tokenByEmail = createToken(email);
         return tokenByEmail.equals(token);
+    }
+
+    @Override
+    public void edit(UserUpdateDTO newData) {
+        Usuario user = usuarioRepository.getReferenceById(newData.id());
+        user.setEmail(newData.email());
+        user.setName(newData.name());
+        usuarioRepository.save(user);
     }
 
 }

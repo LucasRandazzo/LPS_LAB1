@@ -5,6 +5,7 @@ import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
 import com.lps.back.dtos.user.UserReturnLoginDTO;
 import com.lps.back.dtos.user.UserTokenDto;
+import com.lps.back.dtos.user.UserUpdateDTO;
 import com.lps.back.models.Usuario;
 
 public interface IUserService {
@@ -19,4 +20,5 @@ public interface IUserService {
 
     void changePassword(UserRecoverPasswordDTO userRecoverPasswordDTO);
 
+    void edit(UserUpdateDTO userRegisterDTO);
 }
