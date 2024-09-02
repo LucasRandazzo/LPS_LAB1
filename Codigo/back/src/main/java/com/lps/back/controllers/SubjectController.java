@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lps.back.dtos.subject.SubjectDTO;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.services.interfaces.ISubjectService;
@@ -21,6 +22,13 @@ public class SubjectController {
 
     @Autowired
     private ISubjectService subjectService;
+
+    @GetMapping()
+    @ResponseBody
+    public ResponseEntity<List<SubjectDTO>> getAll() {
+
+        return ResponseEntity.status(200).body(subjectService.getAll());
+    }
 
     @GetMapping("/{id}/student")
     @ResponseBody

@@ -2,6 +2,7 @@ package com.lps.back.services.interfaces;
 
 import java.util.List;
 
+import com.lps.back.dtos.subject.SubjectDTO;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
@@ -12,6 +13,8 @@ public interface ISubjectService {
     Subject get(Long id); // method to get one Subject by id
 
     List<Subject> getList(List<Long> ids); // method to get all Subjects
+
+    List<SubjectDTO> getAll(); // method to get all Subjects
 
     void checkSubjectsSituation(List<Subject> subjects, Curriculum course, Long studentId);
 

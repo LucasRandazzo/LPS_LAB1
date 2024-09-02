@@ -1,10 +1,13 @@
 package com.lps.back.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lps.back.dtos.subject.SubjectDTO;
+import com.lps.back.mappers.SubjectMapper;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
@@ -138,5 +141,15 @@ public class SubjectService implements ISubjectService {
     public void removeTeacher(Subject subject, Teacher teacher) {
         subject.getTeachers().remove(teacher);
         this.save(subject);
+    }
+
+    @Override
+    public List<SubjectDTO> getAll() {
+        List<Subject> subjects = subjectRepository.findAll();
+        if (subjects == null || subjects.isEmpty()) {
+            throw new EntityNotFoundException("Subjects not found");
+        }
+        return subjects.stream().map(subject -> SubjectMapper.toDto(subject))
+                .collect(Collectors.toList());
     }
 }

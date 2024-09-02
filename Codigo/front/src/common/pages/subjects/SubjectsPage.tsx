@@ -40,14 +40,10 @@ export const SubjectPage = () => {
             grow: true,
           },
           {
-            accessorKey: "discipline.name",
+            accessorKey: "name",
             header: "Disciplina",
           },
 
-          {
-            accessorKey: "discipline.name",
-            header: "Disciplina",
-          },
           {
             accessorKey: "price",
             header: "Valor",
@@ -56,12 +52,16 @@ export const SubjectPage = () => {
             },
           },
           {
-            accessorKey: "situation",
+            accessorKey: "situationEnum",
             header: "Situação",
           },
           {
-            accessorKey: "discipline.credits",
+            accessorKey: "credits",
             header: "Creditos",
+          },
+          {
+            accessorKey: "CurriculumName",
+            header: "Cursos Relacionados",
           },
         ],
         []
@@ -69,7 +69,7 @@ export const SubjectPage = () => {
       const table = useMaterialReactTable({
         columns,
         enableDensityToggle: false,
-        data: subjectData,
+        data: data,
         //passing the static object variant if no dynamic logic is needed
         muiSelectCheckboxProps: {
           color: "secondary", //makes all checkboxes use the secondary color
