@@ -40,6 +40,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                    { id: 3, icon: <PersonIcon />, label: 'Estudantes', location: '/student' },
                    { id: 4, icon: <AssignmentIndIcon />, label: 'Professores', location: '/teacher' },
                    { id: 5, icon: <BookIcon />, label: 'Disciplinas', location: '/disciplines' },
+                   { id: 5, icon: <BookIcon />, label: 'Materias', location: '/subjects' },
                ]
            break;
        default:
