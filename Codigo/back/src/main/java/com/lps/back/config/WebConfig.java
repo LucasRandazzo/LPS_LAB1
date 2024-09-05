@@ -15,10 +15,12 @@ import com.lps.back.models.Course;
 import com.lps.back.models.Curriculum;
 import com.lps.back.models.Discipline;
 import com.lps.back.models.Registration;
+import com.lps.back.models.Secretary;
 import com.lps.back.models.Subject;
 import com.lps.back.repositories.CourseRepository;
 import com.lps.back.repositories.CurriculumRepository;
 import com.lps.back.repositories.DisciplineRepository;
+import com.lps.back.repositories.SecretaryRepository;
 import com.lps.back.services.interfaces.IUserService;
 import com.lps.back.utils.UsuarioTypesEnum;
 
@@ -31,6 +33,9 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
 
         @Autowired
         private DisciplineRepository disciplineRepository;
+
+        @Autowired
+        private SecretaryRepository secretaryRepository;
 
         @Autowired
         private CourseRepository courseRepository;
@@ -48,6 +53,11 @@ public class WebConfig implements WebMvcConfigurer, CommandLineRunner {
                 userService.register(new UserRegisterDTO("Vinicius Rezende ", "viniciusarantes133@gmail.com",
                                 UsuarioTypesEnum.SECRETARY)); // TODO: Alterar para o seu email
 
+
+                Secretary secretary = new Secretary(null, "secretary", "secretary@gmail.com",
+                                SecurityConfig.passwordEncoder().encode("password"));
+
+                secretaryRepository.save(secretary);
                 Course course1 = new Course(null, "Software Engineer", new ArrayList<Curriculum>());
                 courseRepository.save(course1);
 

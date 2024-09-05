@@ -15,6 +15,7 @@ import { StudentPage } from '../pages/student/StudentPage';
 import { SubjectPage } from '../pages/subjects/SubjectsPage.tsx';
 import { TeacherSubjectPage } from '../pages/subjects/TeacherSubjectPage.tsx';
 import { TeacherPage } from '../pages/teacher/TeacherPage';
+import { DisciplinePage } from '../pages/disciplines/Discipline';
 
 const SystemRoutes = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ const SystemRoutes = createBrowserRouter([
         {
             path: "/subjects",
             element: <SubjectPage />,
+          },
+          {
+            path: "/disciplines",
+            element: <DisciplinePage />,
           },
   
       ],

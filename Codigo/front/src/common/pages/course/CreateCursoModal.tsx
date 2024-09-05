@@ -88,7 +88,7 @@ const CreateCourseModal = (props: ICreateCourseModalProps) => {
       open={props.openModal}
       onClose={handleClose}
     >
-      <DialogTitle>Materias disponiveis</DialogTitle>
+      <DialogTitle>Cadastrar curso</DialogTitle>
       <DialogContent>
         <Box display={"grid"} className="my-5">
             <label>Informe o nome do curso</label>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +34,7 @@ public class Discipline {
     @Column(name = "credits", nullable = false, unique = false, columnDefinition = "int")
     protected Integer credits;
 
-    @OneToMany(mappedBy = "discipline", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "discipline", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     protected List<Subject> subjects;
 
