@@ -11,12 +11,19 @@ import com.lps.back.config.SecurityConfig;
 import com.lps.back.dtos.user.UserLoginDTO;
 import com.lps.back.dtos.user.UserRecoverPasswordDTO;
 import com.lps.back.dtos.user.UserRegisterDTO;
+import com.lps.back.dtos.user.UserReturnLoginDTO;
 import com.lps.back.dtos.user.UserTokenDto;
+import com.lps.back.dtos.user.UserUpdateDTO;
 import com.lps.back.mappers.UsuarioMapper;
+import com.lps.back.models.Secretary;
+import com.lps.back.models.Student;
+import com.lps.back.models.Teacher;
 import com.lps.back.models.Usuario;
 import com.lps.back.repositories.UsuarioRepository;
 import com.lps.back.services.interfaces.IUserService;
+import com.lps.back.utils.UsuarioTypesEnum;
 
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -28,7 +35,7 @@ public class UserService implements IUserService {
     EmailSenderService emailSenderService;
 
     @Override
-    public Usuario login(UserLoginDTO userLoginDTO) {
+    public UserReturnLoginDTO login(UserLoginDTO userLoginDTO) {
         Usuario usuario = usuarioRepository.findByEmail(userLoginDTO.email());
 
         if (usuario == null) {
@@ -42,7 +49,18 @@ public class UserService implements IUserService {
             throw new IllegalArgumentException("Senha incorreta");
         }
 
-        return usuario;
+        UsuarioTypesEnum userType;
+        if (usuario instanceof Teacher) {
+            userType = UsuarioTypesEnum.TEACHER;
+        } else if (usuario instanceof Student) {
+            userType = UsuarioTypesEnum.STUDENT;
+        } else if (usuario instanceof Secretary) {
+            userType = UsuarioTypesEnum.SECRETARY;
+        } else {
+            throw new IllegalArgumentException("Tipo de usuário não reconhecido");
+        }
+
+        return UsuarioMapper.modelToDto(usuario, userType);
     }
 
     @Override
@@ -54,11 +72,18 @@ public class UserService implements IUserService {
         }
 
         user = UsuarioMapper.dtoToModel(userRegisterDTO);
-        String encryptedPassword = SecurityConfig.passwordEncoder().encode(userRegisterDTO.password());
+        String password = this.createToken(userRegisterDTO.email());
+        String encryptedPassword = SecurityConfig.passwordEncoder().encode(password);
         user.setId(null);
         user.setPassword(encryptedPassword);
         usuarioRepository.save(user);
-
+        try {
+            emailSenderService.sendNewUser(user.getEmail(), password);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
@@ -130,6 +155,14 @@ public class UserService implements IUserService {
     private boolean matchToken(String token, String email) {
         String tokenByEmail = createToken(email);
         return tokenByEmail.equals(token);
+    }
+
+    @Override
+    public void edit(UserUpdateDTO newData) {
+        Usuario user = usuarioRepository.getReferenceById(newData.id());
+        user.setEmail(newData.email());
+        user.setName(newData.name());
+        usuarioRepository.save(user);
     }
 
 }

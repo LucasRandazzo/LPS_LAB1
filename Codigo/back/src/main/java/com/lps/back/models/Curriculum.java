@@ -2,6 +2,8 @@ package com.lps.back.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -36,5 +38,10 @@ public class Curriculum {
 
     public int getCredits() {
         return this.disciplines.stream().mapToInt(Discipline::getCredits).sum();
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public String getName() {
+        return course.getName();
     }
 }

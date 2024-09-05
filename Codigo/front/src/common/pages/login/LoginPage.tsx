@@ -1,18 +1,18 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CallToAction, Login, VisibilityOff } from '@mui/icons-material';
+import { VisibilityOff } from '@mui/icons-material';
 import Visibility from '@mui/icons-material/Visibility';
 import { Box, Button, IconButton, InputAdornment, Link, TextField } from '@mui/material';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import * as ButtonStyle from '../../../styles/types/ButtonsStyles';
 import * as Input from '../../../styles/types/InputStyles';
+import { User, UserLogin } from '../../helpers/types.ts';
+import { login } from '../../redux/user/slice.js';
+import userService from '../../services/userService.ts';
 import Validade from '../../utils/Validate.tsx';
 import * as S from './LoginPage.styles.ts';
-import { useDispatch } from 'react-redux'
-import { login, logout } from '../../redux/user/slice.js';
-import { User, UserLogin } from '../../helpers/types.ts';
-import userService from '../../services/userService.ts';
 
 const LoginPage = () => {
     const navigate = useNavigate();

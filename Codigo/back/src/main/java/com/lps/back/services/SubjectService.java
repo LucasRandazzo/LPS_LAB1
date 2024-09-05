@@ -1,16 +1,25 @@
 package com.lps.back.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lps.back.dtos.subject.SubjectDTO;
+import com.lps.back.dtos.subject.SubjectRegisterDTO;
+import com.lps.back.mappers.SubjectMapper;
 import com.lps.back.models.Curriculum;
+import com.lps.back.models.Discipline;
+import com.lps.back.models.Registration;
 import com.lps.back.models.Student;
 import com.lps.back.models.Subject;
 import com.lps.back.models.Teacher;
 import com.lps.back.repositories.SubjectRepository;
+import com.lps.back.services.interfaces.IDisciplineService;
 import com.lps.back.services.interfaces.ISubjectService;
+import com.lps.back.services.interfaces.ITeacherService;
 import com.lps.back.utils.SubjectSituationEnum;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +31,12 @@ public class SubjectService implements ISubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private ITeacherService teacherService;
+
+    @Autowired
+    private IDisciplineService disciplineService;
 
     @Override
     public Subject get(Long id) {
@@ -91,7 +106,12 @@ public class SubjectService implements ISubjectService {
     }
 
     @Override
-    public void save(Subject subject) {
+    public void save(SubjectRegisterDTO dto) {
+        Discipline discipline = disciplineService.get(dto.disciplineId());
+        List<Teacher> teachers = teacherService.getAllByIds(dto.teachersIds());
+        Subject subject = new Subject(null, dto.price(), SubjectSituationEnum.Available, teachers, discipline,
+                new ArrayList<Registration>());
+                
         subjectRepository.save(subject);
     }
 
@@ -120,7 +140,7 @@ public class SubjectService implements ISubjectService {
 
         if (subject.getRegistrations().size() == 60) {
             subject.setSituation(SubjectSituationEnum.Closed);
-            this.save(subject);
+            subjectRepository.save(subject);
         }
 
         return subject.getSituation();
@@ -130,13 +150,23 @@ public class SubjectService implements ISubjectService {
     public SubjectSituationEnum changeStatus(Long id, SubjectSituationEnum situationEnum) {
         Subject subject = this.get(id);
         subject.setSituation(situationEnum);
-        this.save(subject);
+        subjectRepository.save(subject);
         return situationEnum;
     }
 
     @Override
     public void removeTeacher(Subject subject, Teacher teacher) {
         subject.getTeachers().remove(teacher);
-        this.save(subject);
+        subjectRepository.save(subject);
+    }
+
+    @Override
+    public List<SubjectDTO> getAll() {
+        List<Subject> subjects = subjectRepository.findAll();
+        if (subjects == null || subjects.isEmpty()) {
+            throw new EntityNotFoundException("Subjects not found");
+        }
+        return subjects.stream().map(subject -> SubjectMapper.toDto(subject))
+                .collect(Collectors.toList());
     }
 }

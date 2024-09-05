@@ -8,7 +8,7 @@ import axiosInstance from '../../services/api';
 import StudentRegistrationInSubject from './StudentRegistrationInSubject';
 
 
-export const SubjectPage = () => {
+export const TeacherSubjectPage = () => {
     const [data, setData] = useState([]);
     const [subjectSelectedId, setSubjectSelectedId] = useState<number>();
     const [studentData, setStudentData] = useState([]);

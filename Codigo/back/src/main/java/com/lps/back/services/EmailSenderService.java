@@ -76,4 +76,38 @@ public class EmailSenderService {
         mailSender.send(mimeMessage);
     }
 
+    public void sendNewUser(String mail, String password)
+            throws MessagingException, UnsupportedEncodingException {
+        String TEMPLATE_NAME = "NewUser";
+        String MAIL_SUBJECT = "Seja Bem vindo!!";
+
+        String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from");
+        String mailFromName = "Lab Prog System";
+
+        final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+
+        final MimeMessageHelper email;
+
+        email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+        email.setTo(mail);
+        email.setSubject(MAIL_SUBJECT);
+        email.setFrom(new InternetAddress(mailFrom, mailFromName));
+
+        final Context ctx = new Context(LocaleContextHolder.getLocale());
+        ctx.setVariable("logo", LOGO_IMAGE);
+        ctx.setVariable("linkedIn", LINKEDIN_IMAGE);
+        ctx.setVariable("password", password);
+
+        final String htmlContent = this.htmlTemplateEngine.process(TEMPLATE_NAME, ctx);
+
+        email.setText(htmlContent, true);
+
+        ClassPathResource clr = new ClassPathResource(LOGO_IMAGE);
+        ClassPathResource clr3 = new ClassPathResource(LINKEDIN_IMAGE);
+        email.addInline("logo", clr, PNG_MIME);
+        email.addInline("linkedIn", clr3, PNG_MIME);
+        mailSender.send(mimeMessage);
+
+    }
 }
